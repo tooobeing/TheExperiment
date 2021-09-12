@@ -32,6 +32,18 @@ for j = 1:7
         Screen('Flip', Parameter.window);
         WaitSecs(.1)
         time = GetSecs;
+        %RestrictKeysForKbCheck([KbName('z'), KbName('m')]);
+        
+        %keyIsDown = 0;
+        %while keyIsDown == 0 
+        %    [keysIsDown, ~,~] = KbCheck; %keep cheking until it is 1
+        %end
+        
+        %while keyIsDown
+        %    [keysIsDown, ~,~] = KbCheck;
+        %end
+            
+        
     end
 end
 Screen('CloseAll')
