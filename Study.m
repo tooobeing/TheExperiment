@@ -1,55 +1,38 @@
 function Study()
-%Demo = Demographics();
+% The Study function only displays the lists in the randomized fashion
+% The order of words/pairs in the lists will be remain the same
+% The function displays each word pairs, => done
+% asks participant to generate a sentence using the pair they see,=> to do
+% records generated sentences,=> to do
+% Keeps track of the study duration of each pairs,=> to do
+% and words that are studied. => to do
+
 Parameter = Preparescreen();
-
-%fid = fopen('data.txt', 'r');
-%numbers = textscan(fid, '%s');
-
 for i = 1:32
     listOpen = (['List' num2str(i) '.txt']);
     fid(i) = fopen(listOpen);
 end
 
+% creates a for loop for the different lists
+% Seven seperate lists will be displayed during the experiment
 randList = randperm(32); %randomize the lists to show
 for j = 1:7
     words(j) = textscan(fid(randList(j)), '%s');
     x = int2str(j);
-    numofList = ['Liste', x];
-    Screen('TextSize', Parameter.window, 50);  %parametreleri zaten ayarladim 
-    Screen('TextFont', Parameter.window, 'Times'); %bunlari yazmaya gerek var mi bak
-    DrawFormattedText(Parameter.window, numofList, 'center', [255 255 255]);
+    numofList = ['Liste', x];     
+    Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
+    Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
+    WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
     
-    %Screen('DrawText', Parameter.window, numofList, 'center', [255 255 255]);
-    Screen('Flip', Parameter.window)
-    WaitSecs(.1) %sureyi ayarla + ses kaydi koymak lazim
-    
+    %displays the words of the selected lists in the same order every time
     for i = 1:10 %hardcodingi kaldir
         c = words{1, j}{i};
         c = double(c);
-        Screen('DrawText', Parameter.window, c, 'center', [255 255 255]);
+        Screen('DrawText', Parameter.window, c, Parameter.centerX, Parameter.centerY, [255 255 255]);
         Screen('Flip', Parameter.window);
+        WaitSecs(.1)
         time = GetSecs;
     end
 end
-
-
-
-
-%displays one to ten on an experiment screen
-%[rows cols] = size(numbers{1});
-%for i = 1:rows
-%    c = numbers{1}{i};
-%    c = double(c);
-%    sub.words{i} = c;
-
-
-%Screen('TextSize', Parameter.window, 50);
-%Screen('TextFont', Parameter.window, 'Times');
-%[normBoundsRect, offsetBoundsRect] = Screen('TextBounds', Parameter.window, 'Hello world');
-%DrawFormattedText(Parameter.window, c, 'center', Parameter.centerX/2, [240,0,0]);
-
-%Screen('Flip', Parameter.window)
-%WaitSecs(.1)
-%end
 Screen('CloseAll')
 end

@@ -3,7 +3,7 @@ function Parameter = Preparescreen()
 
 HideCursor;
 
-Screen('Preference', 'SkipSyncTests', 1); %optinal-should be removed in actual the experiment
+Screen('Preference', 'SkipSyncTests', 1); %optional-should be removed in actual the experiment
 [Parameter.window, Parameter.rect] = Screen('OpenWindow', 0,[0,0,0]);
 Parameter.width = Parameter.rect(3);
 Parameter.heigth = Parameter.rect(4);
