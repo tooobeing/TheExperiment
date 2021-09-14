@@ -1,5 +1,7 @@
 function RunExp(sub_id)
     tic
+    sub.id = sub_id;
+    %Parameter = Preparescreen(sub_id);
     Parameter.sub_id = sub_id;
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
@@ -22,17 +24,19 @@ function RunExp(sub_id)
     
     movefile('Demo.mat', Parameter.datadir);
     
+    Study(sub_id);
+    
     % Prepare screen
-    Parameter = Preparescreen();
-    Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); %fieldde sikinti cikariyor
+   % Parameter = Preparescreen();
+    %Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); %fieldde sikinti cikariyor
     
 
 
 %to save the data of the subject
 %cd(['Sub' num2str(SubID)])
-getResp = fopen('Test.dat' , 'a'); %creates a dat folder that contain the subject data
-fprintf(getResp, '%s\t %s\t %s\t %s\t %s\t %s\t %s\n', 'testPosition', 'probe', 'CI', 'CIRT', 'response', 'listNo', 'wordNo'); %headers of the dat folder
-fclose(getResp);
+% getResp = fopen('Test.dat' , 'a'); %creates a dat folder that contain the subject data
+% fprintf(getResp, '%s\t %s\t %s\t %s\t %s\t %s\t %s\n', 'testPosition', 'probe', 'CI', 'CIRT', 'response', 'listNo', 'wordNo'); %headers of the dat folder
+% fclose(getResp);
 
 
 

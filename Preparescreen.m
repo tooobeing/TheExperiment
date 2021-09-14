@@ -1,7 +1,8 @@
 %This function prepares the parameter of the experiment
-function Parameter = Preparescreen()
+function Parameter = Preparescreen(sub_id)
 
     HideCursor;
+    %ListenChar(2);
     % for Turkish characters
     slCharacterEncoding('UTF-8')
     Screen('Preference', 'TextEncodingLocale', 'UTF-8'); 
@@ -16,15 +17,18 @@ function Parameter = Preparescreen()
     Screen('TextSize', Parameter.window, 60);
 
     %Keys which will be used throughout the experiment
-    Parameters.yes = KbName('c');
-    Parameters.no = KbName('m');
-    Parameters.return = KbName('return');
-    Parameters.backspace = KbName('backspace');
-    Parameters.space = KbName('space');
-    Parameters.up = KbName('up');
-    Parameters.down = KbName('down');
+    Parameter.yes = KbName('c');
+    Parameter.no = KbName('m');
+    Parameter.return = KbName('return');
+    Parameter.backspace = KbName('backspace');
+    Parameter.space = KbName('space');
+    Parameter.up = KbName('up');
+    Parameter.down = KbName('down');
 
     Parameter.color = [255,255,255];
+    
+    Parameter.sub_id = sub_id;
+    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
 
 
