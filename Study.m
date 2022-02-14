@@ -21,10 +21,11 @@
 
     % hangi listeyi gösterdiğimizi biliyor muyuz?
     randList = randperm(32); %randomize the lists to show
-    for j = 1:3 % 7 olacak
+    sub.listorder = randList; % to keep track of the lists are presented to the participant
+    for j = 1:1 % 7 olacak
         words(j) = textscan(fid(randList(j)), '%s');
         whichList = int2str(j);
-        numofList = ['Liste ', whichList];     
+        numofList = ['Liste ', whichList];        
         Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
         Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
         WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
@@ -34,16 +35,13 @@
         for i = 1:10 %hardcodingi kaldir
             c = words{1, j}{i};
            % c = double(c);
-
-           % su kisim DrawFormattedText ile yapilir mi? 
-           % loopla ilgili bir sey mi?
             Screen('DrawText', Parameter.window, c, Parameter.centerX, Parameter.centerY, [255 255 255]);
             sub.word = words; % sadece son 10'u kaydediyor
             Screen('Flip', Parameter.window);
             
             % waits for subject to press the space bar to see the next
             % word-pair
-            % baska tus yap sonrasında
+            % baska tus yap sonrasında %
             RestrictKeysForKbCheck([Parameter.space]);
             keyIsDown = 0;
             while keyIsDown == 0
@@ -63,7 +61,7 @@
         % kay?t i?in loopun i?ine d?zg?n yerle?tirmek laz?m, g?rd???
         % kelimeleri tekrar edip etmedi?ini d?zg?nce kaydetmek i?in
         
-        
+        sub.record{1,j}{i} = recordSound(3); % her kelimeden sonra 3s ses kaydı koymus oldum
         % tusa basip bitti desin 
             % rt bundan sonra alinsin
             
