@@ -1,4 +1,4 @@
-%function Study(sub_id)
+function Study(sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -10,7 +10,7 @@
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
-    Parameter = Preparescreen(3); % düzelt burayı
+    Parameter = Preparescreen(sub_id); % düzelt burayı
     for i = 1:32
         listOpen = (['List' num2str(i) '.txt']);
         fid(i) = fopen(listOpen);
@@ -22,7 +22,7 @@
     % hangi listeyi gösterdiğimizi biliyor muyuz?
     randList = randperm(32); %randomize the lists to show
     sub.listorder = randList; % to keep track of the lists are presented to the participant
-    for j = 1:1 % 7 olacak
+    for j = 1:3 % 7 olacak
         words(j) = textscan(fid(randList(j)), '%s');
         whichList = int2str(j);
         numofList = ['Liste ', whichList];        
@@ -56,12 +56,12 @@
             
             % cumle kurmasini isteyecegim
                 %Sound recording
-      % recordSound() % bu fonksiyonu loopun i?inde kullanmak?
+      % recordSound() % bu fonksiyonu loopun i?inde kullanma?
             
         % kay?t i?in loopun i?ine d?zg?n yerle?tirmek laz?m, g?rd???
         % kelimeleri tekrar edip etmedi?ini d?zg?nce kaydetmek i?in
         
-        sub.record{1,j}{i} = recordSound(3); % her kelimeden sonra 3s ses kaydı koymus oldum
+        %sub.record{1,j}{i} = recordSound(3); % her kelimeden sonra 3s ses kaydı koymus oldum
         % tusa basip bitti desin 
             % rt bundan sonra alinsin
             
@@ -72,10 +72,11 @@
             
             save('sub', 'sub');
             %movefile('sub.mat', Parameter.datadir);
-            
+           
+            save study.mat
 
 
         end
     end
-    Screen('CloseAll')
-%end
+  Screen('CloseAll')
+end
