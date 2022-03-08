@@ -78,5 +78,5 @@ function Study(sub_id)
 
         end
     end
-  Screen('CloseAll')
+  %Screen('CloseAll')
 end
