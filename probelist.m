@@ -21,3 +21,6 @@ load sub.mat
 
     fclose(f);
 end
+
+% new words de eklenecek + randomization of probelist
+% new words icin bir liste olustur ve hep oradan cek

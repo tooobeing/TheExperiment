@@ -1,4 +1,4 @@
-function Study(sub_id)
+function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -10,7 +10,7 @@ function Study(sub_id)
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
-    Parameter = Preparescreen(sub_id); % düzelt burayı
+    %Parameter = Preparescreen(sub_id); % düzelt burayı
     for i = 1:32
         listOpen = (['List' num2str(i) '.txt']);
         fid(i) = fopen(listOpen);
