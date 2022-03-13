@@ -22,7 +22,7 @@ function Study(Parameter, sub_id)
     % hangi listeyi gösterdiğimizi biliyor muyuz?
     randList = randperm(32); %randomize the lists to show
     sub.listorder = randList; % to keep track of the lists are presented to the participant
-    for j = 1:3 % 7 olacak
+    for j = 1:2 % 7 olacak
         words(j) = textscan(fid(randList(j)), '%s');
         whichList = int2str(j);
         numofList = ['Liste ', whichList];        

@@ -1,4 +1,4 @@
-%This function prepares the parameter of the experiment
+%This function prepares the parameters of the experiment
 function Parameter = Preparescreen(sub_id)
 
     %HideCursor;
@@ -7,9 +7,9 @@ function Parameter = Preparescreen(sub_id)
     slCharacterEncoding('UTF-8')
     Screen('Preference', 'TextEncodingLocale', 'UTF-8'); 
     Screen('Preference', 'SkipSyncTests', 1); %optional-should be removed in actual the experiment
-    [Parameter.window, Parameter.rect] = Screen('OpenWindow', 0,[0,0,0]);
+    [Parameter.window, Parameter.rect] = Screen('OpenWindow', 1,[0,0,0]); % degistir
     Parameter.width = Parameter.rect(3);
-    Parameter.heigth = Parameter.rect(4);
+    Parameter.height = Parameter.rect(4);
     Parameter.centerX = Parameter.rect(3)/2;
     Parameter.centerY = Parameter.rect(4)/2;
 
