@@ -1,5 +1,5 @@
 %This function prepares the parameters of the experiment
-function Parameter = Preparescreen(sub_id)
+function Parameter = Preparescreen()
 
     %HideCursor;
     %ListenChar(2);
@@ -30,8 +30,8 @@ function Parameter = Preparescreen(sub_id)
     Parameter.numoflist = 2; % düzelt
 
     
-    Parameter.sub_id = sub_id;
-    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+    %Parameter.sub_id = sub_id;
+    %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     
     %ShowCursor;
 

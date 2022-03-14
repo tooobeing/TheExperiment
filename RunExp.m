@@ -5,9 +5,8 @@ function RunExp(sub_id)
     % to do -> distractor functions
     
     tic
-    sub.id = sub_id;
-    Parameter = Preparescreen(sub_id);
-    Parameter.sub_id = sub_id;
+     
+    Parameter.sub_id = sub_id; % problem cikiyor 
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
     % Check subject number
@@ -21,14 +20,16 @@ function RunExp(sub_id)
     end
 
     %Demographics
-    Demo.age = double(input('Ya??n?z? '));
-%     Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
-%     Demo.handedness = input('Solak m?s?n?z? [E/H] ', 's');
-%     Demo.visual_problems = input('Herhangi bir g?rme probleminiz var m?? [E/H] ', 's');
+     Demo.age = double(input('Ya??n?z? '));
+     Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
+     Demo.handedness = input('Solak m?s?n?z? [E/H] ', 's');
+     Demo.visual_problems = input('Herhangi bir g?rme probleminiz var m?? [E/H] ', 's');
     save('Demo', 'Demo');
     
     movefile('Demo.mat', Parameter.datadir);
-    
+
+    % Prepare screen
+    Parameter = Preparescreen();    
 
 
     % Instruction 
@@ -36,7 +37,7 @@ function RunExp(sub_id)
     
     % run study function
     % write 'you will begin to study phase of the experiment'
-    Study(Parameter, sub_id);
+   % Study(Parameter, sub_id);
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
@@ -44,10 +45,10 @@ function RunExp(sub_id)
     % run test function
    % Test(sub_id);
     % buraya bir bak
-    textTest = 'Test a?amas?na ge?mek i?in bo?luk tu?una bas?n';
-    DrawFormattedText(Parameter.window, textTest, 'center', 0, 255);
-    Screen('Flip', Parameter.window);
-    WaitSecs(2)
+   % textTest = 'Test a?amas?na ge?mek i?in bo?luk tu?una bas?n';
+    %DrawFormattedText(Parameter.window, textTest, 'center', 0, 255);
+    %Screen('Flip', Parameter.window);
+   % WaitSecs(2)
     
     
     % Prepare screen
@@ -61,8 +62,10 @@ function RunExp(sub_id)
 % getResp = fopen('Test.dat' , 'a'); %creates a dat folder that contain the subject data
 % fprintf(getResp, '%s\t %s\t %s\t %s\t %s\t %s\t %s\n', 'testPosition', 'probe', 'CI', 'CIRT', 'response', 'listNo', 'wordNo'); %headers of the dat folder
 % fclose(getResp);
-
-
 Screen('CloseAll')
+movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir);
+Save('workspace');
+movefile('workspace.mat', Parameter.datadir);
+save('workspace');
 toc
 end
