@@ -6,7 +6,7 @@ function RunExp(sub_id)
     
     tic
     sub.id = sub_id;
-    %Parameter = Preparescreen(sub_id);
+    Parameter = Preparescreen(sub_id);
     Parameter.sub_id = sub_id;
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
@@ -29,18 +29,20 @@ function RunExp(sub_id)
     
     movefile('Demo.mat', Parameter.datadir);
     
-    % add instruction 
-    
+
+
+    % Instruction 
+     instruction(Parameter);
     
     % run study function
     % write 'you will begin to study phase of the experiment'
-    Study(sub_id);
+    Study(Parameter, sub_id);
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
     
     % run test function
-    Test(sub_id);
+   % Test(sub_id);
     % buraya bir bak
     textTest = 'Test a?amas?na ge?mek i?in bo?luk tu?una bas?n';
     DrawFormattedText(Parameter.window, textTest, 'center', 0, 255);
@@ -61,6 +63,6 @@ function RunExp(sub_id)
 % fclose(getResp);
 
 
-
+Screen('CloseAll')
 toc
 end

@@ -11,7 +11,8 @@ function Study(Parameter, sub_id)
     % records which words are studied in sub struct
 
     %Parameter = Preparescreen(sub_id); % düzelt burayı
-    for i = 1:32
+    Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
+    for i = 1:32 % num of lists will be changed
         listOpen = (['List' num2str(i) '.txt']);
         fid(i) = fopen(listOpen);
     end

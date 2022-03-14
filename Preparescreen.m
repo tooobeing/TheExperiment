@@ -7,7 +7,7 @@ function Parameter = Preparescreen(sub_id)
     slCharacterEncoding('UTF-8')
     Screen('Preference', 'TextEncodingLocale', 'UTF-8'); 
     Screen('Preference', 'SkipSyncTests', 1); %optional-should be removed in actual the experiment
-    [Parameter.window, Parameter.rect] = Screen('OpenWindow', 1,[0,0,0]); % degistir
+    [Parameter.window, Parameter.rect] = Screen('OpenWindow', 0,[0,0,0]); % degistir
     Parameter.width = Parameter.rect(3);
     Parameter.height = Parameter.rect(4);
     Parameter.centerX = Parameter.rect(3)/2;
@@ -15,6 +15,7 @@ function Parameter = Preparescreen(sub_id)
 
     Screen('TextFont', Parameter.window, 'Times');
     Screen('TextSize', Parameter.window, 60);
+    Parameter.color = [255,255,255];
 
     %Keys which will be used throughout the experiment
     Parameter.yes = KbName('c');
@@ -25,7 +26,9 @@ function Parameter = Preparescreen(sub_id)
     Parameter.up = KbName('up');
     Parameter.down = KbName('down');
 
-    Parameter.color = [255,255,255];
+    % list numbers etc
+    Parameter.numoflist = 2; % düzelt
+
     
     Parameter.sub_id = sub_id;
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];

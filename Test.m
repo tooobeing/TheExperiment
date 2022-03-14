@@ -1,9 +1,8 @@
-function Test(sub_id)   
-    probelist(sub_id);
-
+function Test(sub_id)
     Parameter = Preparescreen(sub_id);
-    Study(Parameter, sub_id);
-           
+    probelist(sub_id);
+   % study function is added here   
+    Study(Parameter, sub_id);           
    
     
     DrawFormattedText(Parameter.window, double(sprintf('Test aşamasına geçmek için boşluk tuşuna basın')), 'center', 'center');
@@ -26,7 +25,7 @@ function Test(sub_id)
     
     for i = 1:3
         pairs = scanprobelist{1,1}{i};
-        DrawFormattedText(Parameter.window, double(sprintf('Bu çifti daha önce gördünüz mü?')), 'center', Parameter.centerY/3);
+        DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);
         Screen('DrawText', Parameter.window, pairs, Parameter.centerX, Parameter.centerY, [255 255 255] );
         Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
         Screen('DrawText', Parameter.window, 'hayır', Parameter.width*2/3, Parameter.height*2/3);
@@ -48,7 +47,9 @@ function Test(sub_id)
         DrawFormattedText(Parameter.window, double(text), 'center', 'center');
         Screen('Flip', Parameter.window);
 
-        % recall 
+
+        %% recall 
+        % when this works, MATLAB crashes
         response = '';
         while 1
             ch = GetChar;
@@ -63,14 +64,14 @@ function Test(sub_id)
 
                 if length(response) > 0
                     response = double(response);
-                    Screen('TextSize', Parameter.window, 40);
+                    %Screen('TextSize', Parameter.window, 40);
                     [normBoundsRect, ~] = Screen('TextBounds', Parameter.window, response);
                     Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, centerY - normBoundsRect (4)/1.5);
                 end
                 Screen('Flip', Parameter.window);
             end
-    end
-
+        end
+        FlushEvents;
 
 
    

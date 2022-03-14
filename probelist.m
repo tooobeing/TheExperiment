@@ -1,5 +1,7 @@
-function probelist(sub_id)    
+function probelist(sub_id)
+    % this function creates probe list for the test part
 load sub.mat
+
     % simdi tek ve cift kelimeleri aliyor
     % basina bir condition koymak lazım bazen onu bazen oburunu alması
     % gerekiyor
