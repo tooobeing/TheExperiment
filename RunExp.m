@@ -16,17 +16,17 @@ function RunExp(sub_id)
         uiwait(msg);
         return;
     else
-        mkdir(Parameter.datadir); %create folder
+        mkdir(Parameter.datadir); %create folder 
     end
 
     %Demographics
      Demo.age = double(input('Ya??n?z? '));
      Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
-     Demo.handedness = input('Solak m?s?n?z? [E/H] ', 's');
-     Demo.visual_problems = input('Herhangi bir g?rme probleminiz var m?? [E/H] ', 's');
+   %  Demo.handedness = input('Solak m?s?n?z? [E/H] ', 's');
+    % Demo.visual_problems = input('Herhangi bir g?rme probleminiz var m?? [E/H] ', 's');
     save('Demo', 'Demo');
     
-    movefile('Demo.mat', Parameter.datadir);
+    movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
 
     % Prepare screen
     Parameter = Preparescreen();    
@@ -45,27 +45,25 @@ function RunExp(sub_id)
     % run test function
    % Test(sub_id);
     % buraya bir bak
-   % textTest = 'Test a?amas?na ge?mek i?in bo?luk tu?una bas?n';
-    %DrawFormattedText(Parameter.window, textTest, 'center', 0, 255);
-    %Screen('Flip', Parameter.window);
-   % WaitSecs(2)
+
     
     
-    % Prepare screen
-   % Parameter = Preparescreen();
-    %Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); %fieldde sikinti cikariyor
-    
+    % Prepare screen   
+    % bu iki satırı tekrar kopyalayınca çalıştı
+    % ama yukarıdan da silemem belki böyle kalır
+    Parameter.sub_id = sub_id; % problem cikiyor 
+    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+
+    Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); % patlıyor
+    % PrepareScreen çalıştırmayınca - çalışıyor
+    % PrepareScreen çalışınca - hata veriyor
 
 
-%to save the data of the subject
-%cd(['Sub' num2str(SubID)])
-% getResp = fopen('Test.dat' , 'a'); %creates a dat folder that contain the subject data
-% fprintf(getResp, '%s\t %s\t %s\t %s\t %s\t %s\t %s\n', 'testPosition', 'probe', 'CI', 'CIRT', 'response', 'listNo', 'wordNo'); %headers of the dat folder
-% fclose(getResp);
-Screen('CloseAll')
-movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir);
-Save('workspace');
-movefile('workspace.mat', Parameter.datadir);
-save('workspace');
+
+    Screen('CloseAll')
+    %movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir); % bunu yapamadı
+    save('workspace');
+    movefile('workspace.mat', Parameter.datadir);
+
 toc
 end

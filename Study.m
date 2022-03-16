@@ -1,3 +1,4 @@
+%function Study(sub_id)
 function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
@@ -10,7 +11,8 @@ function Study(Parameter, sub_id)
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
-    %Parameter = Preparescreen(sub_id); % düzelt burayı
+
+    %Parameter = Preparescreen(); % düzelt burayı
     Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
     for i = 1:32 % num of lists will be changed
         listOpen = (['List' num2str(i) '.txt']);
@@ -34,9 +36,9 @@ function Study(Parameter, sub_id)
 
         %displays the words of the selected lists in the same order every time
         for i = 1:10 %hardcodingi kaldir
-            c = words{1, j}{i};
+            char = words{1, j}{i};
            % c = double(c);
-            Screen('DrawText', Parameter.window, c, Parameter.centerX, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, char, Parameter.centerX, Parameter.centerY, [255 255 255]);
             sub.word = words; % sadece son 10'u kaydediyor
             Screen('Flip', Parameter.window);
             
@@ -54,7 +56,10 @@ function Study(Parameter, sub_id)
             end
 
 
-            
+            % save("Sub" + num2str(sub_id) + "\Sub" + ".mat");  ==>
+            % kaydetme alternatifi
+
+
             % cumle kurmasini isteyecegim
                 %Sound recording
       % recordSound() % bu fonksiyonu loopun i?inde kullanma?
@@ -70,11 +75,15 @@ function Study(Parameter, sub_id)
             sub.RT{1,j}{i} = time; % tum RTleri kaydediyor
             
             % ses dosyasini da kaydet
-            
+            study = fopen('study.dat', 'a');
+            fprintf(study, '%s\t %s\t %s\n', whichList, numofList, char);
+            fclose(study);
             save('sub', 'sub');
-            %movefile('sub.mat', Parameter.datadir);
+            %movefile('sub.mat', Parameter.datadir); % num2str falan koy
+            %  buraya
            
             save study.mat
+            %distractoru buraya koy
 
 
         end
