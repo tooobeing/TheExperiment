@@ -38,6 +38,7 @@ function Study(sub_id)
         for i = 1:10 %hardcodingi kaldir
             char = words{1, j}{i};
            % c = double(c);
+           
             Screen('DrawText', Parameter.window, char, Parameter.centerX, Parameter.centerY, [255 255 255]);
             sub.word = words; % sadece son 10'u kaydediyor
             Screen('Flip', Parameter.window);
