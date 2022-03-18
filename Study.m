@@ -1,5 +1,5 @@
-%function Study(sub_id)
-function Study(Parameter, sub_id)
+function Study(sub_id)
+%function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -12,7 +12,7 @@ function Study(Parameter, sub_id)
     % records which words are studied in sub struct
 
 
-    %Parameter = Preparescreen(); % düzelt burayı
+    Parameter = Preparescreen(); % düzelt burayı
     Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
     for i = 1:32 % num of lists will be changed
         listOpen = (['List' num2str(i) '.txt']);
@@ -44,8 +44,8 @@ function Study(Parameter, sub_id)
             
             % waits for subject to press the space bar to see the next
             % word-pair
-            % baska tus yap sonrasında %
-            RestrictKeysForKbCheck([Parameter.space]);
+            % baska tus yap sonrasında 
+            RestrictKeysForKbCheck([Parameter.space]);            
             keyIsDown = 0;
             while keyIsDown == 0
                 [keyIsDown, secs, keyCode] = KbCheck;
@@ -88,5 +88,5 @@ function Study(Parameter, sub_id)
 
         end
     end
-  %Screen('CloseAll')
+  Screen('CloseAll')
 end
