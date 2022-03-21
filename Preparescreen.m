@@ -29,7 +29,8 @@ function Parameter = Preparescreen()
     % list numbers etc
     Parameter.numoflist = 2; % düzelt
 
-    
+    % Inter-stimulus Interval
+    Parameter.ISI = WaitSecs(0.5);
     %Parameter.sub_id = sub_id;
     %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     

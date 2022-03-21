@@ -54,14 +54,15 @@ function RunExp(sub_id)
     Parameter.sub_id = sub_id; % problem cikiyor 
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
-    Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); % patlıyor
+    Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); % açıyor ama boş/bunu nasıl doldururuz
     % PrepareScreen çalıştırmayınca - çalışıyor
     % PrepareScreen çalışınca - hata veriyor
 
 
 
     Screen('CloseAll')
-    %movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir); % bunu yapamadı
+    %movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir); % bunu yapamadı 
+    % muhtemelen dosya boş olduğu için taşıyamıyor
     save('workspace');
     movefile('workspace.mat', Parameter.datadir);
 
