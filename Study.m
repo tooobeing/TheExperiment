@@ -1,4 +1,4 @@
-function Study(sub_id)
+%function Study(sub_id)
 %function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
@@ -13,7 +13,7 @@ function Study(sub_id)
 
 
     Parameter = Preparescreen(); % düzelt burayı
-    Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
+    %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
     for i = 1:32 % num of lists will be changed
         listOpen = (['List' num2str(i) '.txt']);
         fid(i) = fopen(listOpen);
@@ -90,4 +90,4 @@ function Study(sub_id)
         end
     end
   Screen('CloseAll')
-end
+%end
