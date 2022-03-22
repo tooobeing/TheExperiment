@@ -33,17 +33,16 @@
     for i = 1:2
         pairs = scanprobelist{1,1}{i};
         %pairs = double(pairs);
-        DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);
-        %Screen('DrawText', Parameter.window, 'Bu çifti daha önce gördünüz mü?', Parameter.centerX, Parameter.centerY/3);
+        DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
         Screen('DrawText', Parameter.window, pairs, Parameter.centerX, Parameter.centerY, [255 255 255]);
         Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
         Screen('DrawText', Parameter.window, 'hayır', Parameter.width*2/3, Parameter.height*2/3);
         probeTime = Screen('Flip', Parameter.window);
 
         
-        
+        % recognitionda basılacak tuşları restrict edemedim
         % collect recognition judgments yes = c no = m
-        
+        FlushEvents;
         RestrictKeysForKbCheck([Parameter.yes, Parameter.no]);
         keyIsDown = 0;
         while keyIsDown == 0
@@ -54,6 +53,8 @@
             break
         end 
         
+% response accuracy yaz haticenin pilot deneyinde var ifli kısım
+
         % bu kısmı yukarıda yapmış olduk-gerek yok gibi ama kenarda dursun
         %while keyIsDown % burada, sadece tuş basılı iken KbCheck yap diyoruz.
         %[keyIsDown, ~, ~] = KbCheck;
@@ -92,7 +93,7 @@
                 end
                 Screen('Flip', Parameter.window);
         end            
-            sub.response = sprintf(response);
+            sub.response = response;
         
         
 
