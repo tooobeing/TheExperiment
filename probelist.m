@@ -1,4 +1,4 @@
-%function probelist(sub_id)
+%function probelist(sub_id) % parameter olabilir içi
     % this function creates probe list for the test part
 load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 
@@ -32,15 +32,29 @@ load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
     for i = 1:10
         testPair.tn{i} = nnew{i,1};
     end
-
+    save testPair.mat
+%end
 
     % final list oluştur
-    probelist = [];
-    for j = 1:4
-        for i = 1:10
-            testPair{1,j}.t{j} = ;
-        end
+    % i'ler liste sayısına göre değişmeli-parameter'ın içine koy ama sonra 
+    probeList = {};
+    if a == 1
+    for i = 1:3
+    probeList{i} = testPair.t4{i};
+    probeList{i+3} = testPair.t6{i};
+    probeList{i+6} = testPair.t8{i};
+    probeList{i+9} = testPair.tn{i};
+    end
+    elseif a == 2
+for i = 1:3
+    probeList{i} = testPair.t3{i};
+    probeList{i+3} = testPair.t5{i};
+    probeList{i+6} = testPair.t7{i};
+    probeList{i+9} = testPair.tn{i};
+    end
     end
 
-% new words de eklenecek + randomization of probelist
-% new words icin bir liste olustur ve hep oradan cek
+    
+    Shuffle(probeList); % bunu bir variable'a ata
+    
+    %end

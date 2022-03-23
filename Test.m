@@ -1,9 +1,9 @@
-%function Test(sub_id)
+function Test(sub_id)
     Parameter = Preparescreen();
     %probelist(sub_id);
    
    % study function is added here   
-   % Study(Parameter, sub_id);           
+    %Study(Parameter, sub_id);           
    
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
     %[normBoundsRect, ~] = Screen('TextBounds', Parameter.window, text1);
@@ -30,7 +30,7 @@
     
 
     %% recognition
-    for i = 1:2
+    for i = 1:10
         pairs = scanprobelist{1,1}{i};
         %pairs = double(pairs);
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
@@ -102,4 +102,4 @@
     end
      Screen('CloseAll');
     
-%end
+end

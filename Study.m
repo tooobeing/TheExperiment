@@ -1,5 +1,5 @@
 %function Study(sub_id)
-%function Study(Parameter, sub_id)
+function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -12,7 +12,7 @@
     % records which words are studied in sub struct
 
 
-    Parameter = Preparescreen(); % düzelt burayı
+    %Parameter = Preparescreen(); % düzelt burayı
     %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
     for i = 1:32 % num of lists will be changed
         listOpen = (['List' num2str(i) '.txt']);
@@ -25,7 +25,7 @@
     % hangi listeyi gösterdiğimizi biliyor muyuz?
     randList = randperm(32); %randomize the lists to show
     sub.listorder = randList; % to keep track of the lists are presented to the participant
-    for j = 1:5 % 7 olacak
+    for j = 1:3 % 7 olacak
         words(j) = textscan(fid(randList(j)), '%s');
         whichList = int2str(j);
         numofList = ['Liste ', whichList];        
@@ -89,5 +89,5 @@
 
         end
     end
-  Screen('CloseAll')
-%end
+  %Screen('CloseAll')
+end
