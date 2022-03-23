@@ -1,4 +1,4 @@
-function Test(sub_id)
+%function Test(sub_id)
     Parameter = Preparescreen();
     %probelist(sub_id);
    
@@ -23,15 +23,15 @@ function Test(sub_id)
           [keyIsDown, ~, ~] = KbCheck;
     end
 
-    f = fopen('probelisst.txt', 'r');
-    scanprobelist = textscan(f, '%s');
-    fclose(f); % cannot close the probelist
-    [rows cols] = size(scanprobelist{1,1});
+
+    probeList = probelist(); % creates the probe list
+    [rows cols] = size(probeList);
+    
     
 
     %% recognition
-    for i = 1:10
-        pairs = scanprobelist{1,1}{i};
+    for i = 1:cols
+        pairs = probeList{1,i};
         %pairs = double(pairs);
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
         Screen('DrawText', Parameter.window, pairs, Parameter.centerX, Parameter.centerY, [255 255 255]);
@@ -92,8 +92,9 @@ function Test(sub_id)
                     Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, Parameter.centerY - normBoundsRect (4)/1.5, [255, 255, 255]);
                 end
                 Screen('Flip', Parameter.window);
+                sub.response = response; % cannot record the recall responses
         end            
-            sub.response = response;
+            
         
         
 
@@ -102,4 +103,4 @@ function Test(sub_id)
     end
      Screen('CloseAll');
     
-end
+%end

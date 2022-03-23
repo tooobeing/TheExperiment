@@ -17,13 +17,17 @@ fclose(fid2);
 
 
 %bunun üzerine düşün
+% aynı listeleri oluşturuyor
 pairs = {first{1,1}, second{1,1}};
-for i = 1:10
-    fieldname = sprintf('List%i', i);
-    for j = 1:10
+counter = 1;
+for i = 1:2 % list number
     
-    AllList.fieldname{1,1}{j} = pairs{1,1}{j};
+    for j = 1:10
+    fieldname = sprintf('List%i', i);
+    all.(fieldname){1,1}{j,1} = pairs{1,1}{j};
+    all.(fieldname){1,1}{j,2} = pairs{1,2}{j};
     end
+    %counter = counter + 1; % hiçbir işe yaramadı
 end
 
 
