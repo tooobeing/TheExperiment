@@ -7,30 +7,36 @@
 %centerX = rect(3)/2;
 %centerY = rect(4)/2;
 
-fid = fopen("shuffled1st.txt", 'r');
-first = textscan(fid, '%s');
+% all rated word pairs are in one struct
+% the pairs were shuffled in R program
+% now 10-pair word lists will be constructed
+fid = fopen("studyList_shuffled.txt", 'r' );
+all_pairs = textscan(fid, '%s%s', 'Delimiter','-', 'TreatAsEmpty','~');
 fclose(fid);
 
-fid2 = fopen("shuffled2nd.txt", 'r');
-second = textscan(fid2, '%s');
-fclose(fid2);
 
 
-%bunun üzerine düşün
-% aynı listeleri oluşturuyor
-pairs = {first{1,1}, second{1,1}};
-counter = 1;
-for i = 1:2 % list number
-    
-    for j = 1:10
-    fieldname = sprintf('List%i', i);
-    all.(fieldname){1,1}{j,1} = pairs{1,1}{j};
-    all.(fieldname){1,1}{j,2} = pairs{1,2}{j};
+field_names = {'List1', 'List2', 'List3', 'List4', 'List5', 'List6', 'List7', 'List8', 'List9', 'List10'};
+
+
+all_pairs{1,1}
+values = {'List1', 'List2', 'List3', 'List4', 'List5', 'List6', 'List7', 'List8', 'List9', 'List10'};
+
+
+
+% 10 tane liste yapıyor ama aynı kelimeleri kopyalıyor 
+% bir de liste ismi eklemeye çalışacağım ve farklı listeler oluşturmaya
+for j = 1:10
+    values{j} = {};
+    counter = 0;
+    for i = 1:10        
+        values{j}{counter+i,1} = all_pairs{1,1}{counter+i};
+        values{j}{counter+i,2} = all_pairs{1,2}{counter+i};
     end
-    %counter = counter + 1; % hiçbir işe yaramadı
+    counter = 10;
 end
 
-
+    
 
 
 %for i = 1:3
