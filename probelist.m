@@ -3,6 +3,8 @@ function probeList = probelist() % parameter olabilir içi
 load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 
     
+[studyList, newpairList] = listconstruction();
+
     [rows cols] = size(sub.word);
 
 % t's indicates word's ranking within the list

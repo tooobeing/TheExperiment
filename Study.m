@@ -11,6 +11,7 @@ function Study(Parameter, sub_id)
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
+    [studyList, newpairList] = listconstruction();
 
     %Parameter = Preparescreen(); % düzelt burayı
     %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
