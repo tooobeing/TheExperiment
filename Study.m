@@ -1,5 +1,5 @@
 %function Study(sub_id)
-function Study(Parameter, sub_id)
+function Study( sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -13,49 +13,26 @@ function Study(Parameter, sub_id)
 
     [studyList, newpairList] = listconstruction();
 
-    %Parameter = Preparescreen(); % düzelt burayı
+    Parameter = Preparescreen(); % düzelt burayı
     %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
-    for i = 1:32 % num of lists will be changed
-        listOpen = (['List' num2str(i) '.txt']);
-        fid(i) = fopen(listOpen);
+
+    
+    snames = fieldnames(studyList);
+    for s = 1:numel(snames)
+        aa = studyList.(snames{s});
+        Screen('DrawText', Parameter.window, snames{s}, Parameter.centerX, Parameter.centerY, [0,0,0]);
+        Screen('Flip', Parameter.window);
+        WaitSecs(1);
+        for i = 1:10
+            Screen('DrawText', Parameter.window, aa{i,1},Parameter.centerX-50, Parameter.centerY, [0,0,0]);
+            Screen('DrawText', Parameter.window, aa{i,2},Parameter.centerX+50, Parameter.centerY, [0,0,0]);
+            Screen('Flip', Parameter.window);
+            WaitSecs(1);
+        end
     end
 
-    % creates a for loop for the different lists
-    % Seven seperate lists will be displayed during the experiment
 
-    % hangi listeyi gösterdiğimizi biliyor muyuz?
-    randList = randperm(32); %randomize the lists to show
-    sub.listorder = randList; % to keep track of the lists are presented to the participant
-    for j = 1:3 % 7 olacak
-        words(j) = textscan(fid(randList(j)), '%s');
-        whichList = int2str(j);
-        numofList = ['Liste ', whichList];        
-        Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
-        Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
-        WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
-        sub.list{j} = numofList; %tam olmadi
 
-        %displays the words of the selected lists in the same order every time
-        for i = 1:10 %hardcodingi kaldir
-            char = words{1, j}{i};
-           % c = double(c);
-           
-            Screen('DrawText', Parameter.window, char, Parameter.centerX, Parameter.centerY, [255 255 255]);
-            sub.word = words; % sadece son 10'u kaydediyor
-            Screen('Flip', Parameter.window);
-            
-            % waits for subject to press the space bar to see the next
-            % word-pair
-            % baska tus yap sonrasında 
-            RestrictKeysForKbCheck([Parameter.space]);            
-            keyIsDown = 0;
-            while keyIsDown == 0
-                [keyIsDown, secs, keyCode] = KbCheck;
-            end
-
-            while keyIsDown
-                [keyIsDown, ~, ~] = KbCheck;
-            end
 
 
             % save("Sub" + num2str(sub_id) + "\Sub" + ".mat");  ==>
@@ -73,14 +50,7 @@ function Study(Parameter, sub_id)
         % tusa basip bitti desin 
             % rt bundan sonra alinsin
             
-            time = GetSecs;
-            sub.RT{1,j}{i} = time; % tum RTleri kaydediyor
             
-            % ses dosyasini da kaydet
-            study = fopen('study.dat', 'a');
-            fprintf(study, '%s\t %s\t %s\n', whichList, numofList, char);
-            fclose(study);
-            save('sub', 'sub');
             %movefile('sub.mat', Parameter.datadir); % num2str falan koy
             %  buraya
            
@@ -88,7 +58,7 @@ function Study(Parameter, sub_id)
             %distractoru buraya koy
 
 
-        end
-    end
-  %Screen('CloseAll')
+        %end
+    %end
+  Screen('CloseAll')
 end
