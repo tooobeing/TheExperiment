@@ -16,19 +16,67 @@
     Parameter = Preparescreen(); % düzelt burayı
     %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
 
+    %% 
+    %fid = fopen("createdbyhand.txt", 'r' );
+    %all_pairs = textscan(fid, '%s%s', 'Delimiter','\t', 'TreatAsEmpty','~');
+    %fclose(fid);
+    
+    
+       % for i = 1:10
+        %    Screen('DrawText', Parameter.window, all_pairs{1,1}{i},Parameter.centerX-150, Parameter.centerY, [255,255,255]);
+         %   Screen('DrawText', Parameter.window, all_pairs{1,2}{i},Parameter.centerX+150, Parameter.centerY, [255,255,255]);
+          %  Screen('Flip', Parameter.window);
+           % WaitSecs(1);
+        %end
 
-    fid = fopen("createdbyhand.txt", 'r' );
-    all_pairs = textscan(fid, '%s%s', 'Delimiter','\t', 'TreatAsEmpty','~');
-    fclose(fid);
-    
-    
-        for i = 1:10
-            Screen('DrawText', Parameter.window, all_pairs{1,1}{i},Parameter.centerX-150, Parameter.centerY, [255,255,255]);
-            Screen('DrawText', Parameter.window, all_pairs{1,2}{i},Parameter.centerX+150, Parameter.centerY, [255,255,255]);
+
+
+    %%
+
+    for i = 1:32 % num of lists will be changed
+        listOpen = (['List' num2str(i) '.txt']);
+        fid(i) = fopen(listOpen);
+    end
+
+           % creates a for loop for the different lists
+    % Seven seperate lists will be displayed during the experiment
+    % hangi listeyi gösterdiğimizi biliyor muyuz?
+    randList = randperm(10); %randomize the lists to show
+    sub.listorder = randList; % to keep track of the lists are presented to the participant
+    for j = 1:3 % 7 olacak
+        pairs(j) = textscan(fid(randList(j)), '%s');
+        whichList = int2str(j);
+        numofList = ['Liste ', whichList];        
+        Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
+        Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
+        WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
+        sub.list{j} = numofList; %tam olmadi
+
+
+        %displays the words of the selected lists in the same order every time
+        for i = 1:10 %hardcodingi kaldir
+            char = pairs{1, j}{i};
+           % c = double(c);
+
+            Screen('DrawText', Parameter.window, pairs{1, j}{i,1}, Parameter.centerX, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, pairs{1, j}{i,2}, Parameter.centerX, Parameter.centerY, [255 255 255]);
+            sub.word = pairs; % sadece son 10'u kaydediyor
             Screen('Flip', Parameter.window);
-            WaitSecs(1);
-        end
 
+            % waits for subject to press the space bar to see the next
+            % word-pair
+            % baska tus yap sonrasında 
+            RestrictKeysForKbCheck([Parameter.space]);            
+            keyIsDown = 0;
+            while keyIsDown == 0
+                [keyIsDown, secs, keyCode] = KbCheck;
+            end
+
+            while keyIsDown
+                [keyIsDown, ~, ~] = KbCheck;
+            end
+        end
+    end
 
 
 
