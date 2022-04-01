@@ -1,5 +1,5 @@
 %function Study(sub_id)
-function Study( sub_id)
+%function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -11,26 +11,23 @@ function Study( sub_id)
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
-    [studyList, newpairList] = listconstruction();
+    %[studyList, newpairList] = listconstruction();
 
     Parameter = Preparescreen(); % düzelt burayı
     %Screen('TextSize', Parameter.window, 60); % => buna gerek olmayabilir
 
+
+    fid = fopen("createdbyhand.txt", 'r' );
+    all_pairs = textscan(fid, '%s%s', 'Delimiter','\t', 'TreatAsEmpty','~');
+    fclose(fid);
     
-    snames = fieldnames(studyList);
-    for s = 1:numel(snames)
-        aa = studyList.(snames{s});
-        Screen('DrawText', Parameter.window, snames{s}, Parameter.centerX, Parameter.centerY, [0,0,0]);
-        Screen('Flip', Parameter.window);
-        WaitSecs(1);
+    
         for i = 1:10
-            Screen('DrawText', Parameter.window, aa{i,1},Parameter.centerX-50, Parameter.centerY, [0,0,0]);
-            Screen('DrawText', Parameter.window, aa{i,2},Parameter.centerX+50, Parameter.centerY, [0,0,0]);
+            Screen('DrawText', Parameter.window, all_pairs{1,1}{i},Parameter.centerX-150, Parameter.centerY, [255,255,255]);
+            Screen('DrawText', Parameter.window, all_pairs{1,2}{i},Parameter.centerX+150, Parameter.centerY, [255,255,255]);
             Screen('Flip', Parameter.window);
             WaitSecs(1);
         end
-    end
-
 
 
 
@@ -61,4 +58,4 @@ function Study( sub_id)
         %end
     %end
   Screen('CloseAll')
-end
+%end
