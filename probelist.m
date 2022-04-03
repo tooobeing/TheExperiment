@@ -1,7 +1,7 @@
-function probeList = probelist() % parameter olabilir içi
+%function probeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
 load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
-
+load study.mat
     
 [studyList, newpairList] = listconstruction();
 
@@ -14,15 +14,21 @@ load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
     a = randi(2);
     if a == 1
         for i = 1:cols
-            testPair.t4{i} = sub.word{1,i}{4}; % i indicates list
-            testPair.t6{i} = sub.word{1,i}{6};
-            testPair.t8{i} = sub.word{1,i}{8};
+            testPair.t4{i,1} = sub.word{1,i}{4,1}; % i indicates list
+            testPair.t4{i,2} = sub.word{1,i}{4,2};
+            testPair.t6{i,1} = sub.word{1,i}{6,1};
+            testPair.t6{i,2} = sub.word{1,i}{6,2};
+            testPair.t8{i,1} = sub.word{1,i}{8,1};
+            testPair.t8{i,2} = sub.word{1,i}{8,2};
         end
     else 
         for i = 1:cols
-            testPair.t3{i} = sub.word{1,i}{3};
-            testPair.t5{i} = sub.word{1,i}{5};
-            testPair.t7{i} = sub.word{1,i}{7};
+            testPair.t3{i,1} = sub.word{1,i}{3,1};
+            testPair.t3{i,2} = sub.word{1,i}{3,2};
+            testPair.t5{i,1} = sub.word{1,i}{5,1};
+            testPair.t5{i,2} = sub.word{1,i}{5,2};
+            testPair.t7{i,1} = sub.word{1,i}{7,1};
+            testPair.t7{i,2} = sub.word{1,i}{7,2};
         end
     end
 
@@ -37,13 +43,16 @@ load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
     save testPair.mat
 %end
 
+
+%%% biraz daha bak
     % final list oluştur
     % i'ler liste sayısına göre değişmeli-parameter'ın içine koy ama sonra 
     % pairları ya ikinci row olarak yazdır ya da iki colomn yapmaya bak
     probeList = {};
     if a == 1
         for i = 1:3
-            probeList{i} = testPair.t4{i};
+            probeList{i,1} = testPair.t4{i,1};
+            probeList{i,2} = testPair.t4{i,2};
             probeList{i+3} = testPair.t6{i};
             probeList{i+6} = testPair.t8{i};
             probeList{i+9} = testPair.tn{i};
@@ -60,4 +69,4 @@ load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
     
     Shuffle(probeList); % bunu bir variable'a ata
     
-    end
+   % end
