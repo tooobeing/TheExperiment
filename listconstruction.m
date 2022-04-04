@@ -36,7 +36,7 @@ function [studyList, newpairList] = listconstruction()
     %% new pairs
     % new-pairs list reading
     % new pairs for probe will be chosen from this list struct.
-    fid_new = fopen("createdbyhand.txt", 'r');
+    fid_new = fopen("newPairs.txt", 'r');
     new_pairs = textscan(fid_new, '%s%s', 'Delimiter', '\t');
     fclose(fid_new);
     

@@ -27,7 +27,7 @@ function Parameter = Preparescreen()
     Parameter.down = KbName('down');
 
     % list numbers etc
-    Parameter.numoflist = 2; % düzelt
+    Parameter.numoflist = 10; % düzelt
     
     % Inter-stimulus Interval
     Parameter.ISI = WaitSecs(0.5);
