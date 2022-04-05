@@ -1,6 +1,6 @@
 %function Test(sub_id)
     Parameter = Preparescreen();
-    %probelist(sub_id);
+    %probeList = probelist(); % brings probeList for test
    
    % study function is added here   
     %Study(Parameter, sub_id);           
@@ -10,8 +10,7 @@
     %text = double(text);
     %DrawFormattedText(Parameter.window, double(text1), 'center', Parameter.centerY);
     Screen('DrawText', Parameter.window, text1, Parameter.centerX , Parameter.centerY, [255 255 255])
-    Screen('Flip', Parameter.window);
-    %WaitSecs(1);      
+    Screen('Flip', Parameter.window);    
     
     RestrictKeysForKbCheck([Parameter.space]);
     keyIsDown = 0;
@@ -24,17 +23,17 @@
     end
 
 
-    probeList = probelist(); % creates the probe list
     [rows cols] = size(probeList);
     
     
 
     %% recognition
-    for i = 1:cols
-        pairs = probeList{1,i};
+    for i = 1:10
+        %pairs = probeList{1,i};
         %pairs = double(pairs);
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
-        Screen('DrawText', Parameter.window, pairs, Parameter.centerX, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, probeList{i,1}, Parameter.centerX-100, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, probeList{i,2}, Parameter.centerX+100, Parameter.centerY, [255 255 255]);
         Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
         Screen('DrawText', Parameter.window, 'hayır', Parameter.width*2/3, Parameter.height*2/3);
         probeTime = Screen('Flip', Parameter.window);
@@ -50,7 +49,9 @@
             [keyIsDown, seconds, keyCode] = KbCheck;
             sub.responseRec{i} = ch;
             sub.recogRT(i) = seconds - probeTime;
-            break
+            %break
+
+            %if probeList{i,1} == 
         end 
         
 % response accuracy yaz haticenin pilot deneyinde var ifli kısım
@@ -68,8 +69,7 @@
         text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
         DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
         Screen('Flip', Parameter.window);
-        % recall yaparken bu yazı ekranda kalsın istiyorum sonra
-        % bakabilirsin
+        % recall yaparken bu yazı ekranda kalsın istiyorum sonra bakabilirsin
               
         response = '';
         while 1

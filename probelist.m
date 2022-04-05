@@ -1,18 +1,17 @@
-%function probeList = probelist() % parameter olabilir içi
+function probeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
-load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
+%load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 load study.mat
     
 [studyList, newpairList] = listconstruction();
-Parameter = Preparescreen();
+%Parameter = Preparescreen();
     [rows cols] = size(sub.word);
 
 % t's indicates word's ranking within the list
 % t4 has 4th words from all presented lists and goes on like that
 % a is for randomization, for different participants even or odd'th probes
 % will be presented
-    %a = randi(2);
-    a = 1;
+    a = randi(2);    
     if a == 1
         for i = 1:cols
             testPair.t4{i,1} = sub.word{1,i}{4,1}; % i indicates list
@@ -59,19 +58,23 @@ Parameter = Preparescreen();
             probeList{i+Parameter.numoflist,2} = testPair.t6{i,2};
             probeList{i+2*Parameter.numoflist,1} = testPair.t8{i,1};
             probeList{i+2*Parameter.numoflist,2} = testPair.t8{i,2};
-           % probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; % burada sıkıntı çıkıyor
-            %probeList{i+3*Parameter.numoflist,2} = testPair.tn{i,2};
+            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; % burada sıkıntı çıkıyor
+            probeList{i+3*Parameter.numoflist,2} = testPair.tn{i,2};
         end
     elseif a == 2
-        for i = 1:3
-            probeList{i} = testPair.t3{i};
-            probeList{i+3} = testPair.t5{i};
-            probeList{i+6} = testPair.t7{i};
-            probeList{i+9} = testPair.tn{i};
+        for i = 1:Parameter.numoflist
+            probeList{i,1} = testPair.t3{i,1};
+            probeList{i,2} = testPair.t3{i,2};
+            probeList{i+Parameter.numoflist,1} = testPair.t5{i,1};
+            probeList{i+Parameter.numoflist,2} = testPair.t5{i,2};
+            probeList{i+2*Parameter.numoflist,1} = testPair.t7{i,1};
+            probeList{i+2*Parameter.numoflist,2} = testPair.t7{i,2};
+            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; % burada sıkıntı çıkıyor
+            probeList{i+3*Parameter.numoflist,2} = testPair.tn{i,2};
         end
     end
 
     
-    Shuffle(probeList); % bunu bir variable'a ata
+  x =  Shuffle(probeList); % çiftleri bozuyor
     
-   % end
+    end
