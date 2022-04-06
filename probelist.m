@@ -58,7 +58,7 @@ load study.mat
             probeList{i+Parameter.numoflist,2} = testPair.t6{i,2};
             probeList{i+2*Parameter.numoflist,1} = testPair.t8{i,1};
             probeList{i+2*Parameter.numoflist,2} = testPair.t8{i,2};
-            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; % burada sıkıntı çıkıyor
+            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; 
             probeList{i+3*Parameter.numoflist,2} = testPair.tn{i,2};
         end
     elseif a == 2
@@ -69,7 +69,7 @@ load study.mat
             probeList{i+Parameter.numoflist,2} = testPair.t5{i,2};
             probeList{i+2*Parameter.numoflist,1} = testPair.t7{i,1};
             probeList{i+2*Parameter.numoflist,2} = testPair.t7{i,2};
-            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; % burada sıkıntı çıkıyor
+            probeList{i+3*Parameter.numoflist,1} = testPair.tn{i,1}; 
             probeList{i+3*Parameter.numoflist,2} = testPair.tn{i,2};
         end
     end

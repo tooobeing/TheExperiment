@@ -28,7 +28,7 @@
     
 
     %% recognition
-    for i = 1:10
+    for i = 1:3
         %pairs = probeList{1,i};
         %pairs = double(pairs);
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
@@ -39,7 +39,7 @@
         probeTime = Screen('Flip', Parameter.window);
 
         
-        % recognitionda basılacak tuşları restrict edemedim
+
         % collect recognition judgments yes = c no = m
         FlushEvents;
         RestrictKeysForKbCheck([Parameter.yes, Parameter.no]);
@@ -49,7 +49,7 @@
             [keyIsDown, seconds, keyCode] = KbCheck;
             sub.responseRec{i} = ch;
             sub.recogRT(i) = seconds - probeTime;
-            %break
+            %break % for restrict keys to recognition
 
             %if probeList{i,1} == 
         end 
@@ -92,13 +92,11 @@
                     Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, Parameter.centerY - normBoundsRect (4)/1.5, [255, 255, 255]);
                 end
                 Screen('Flip', Parameter.window);
-                sub.response = response; % cannot record the recall responses
+                sub.response{i,1} = sprintf('%s\n', response); % recall responses are saved
         end            
             
         
-        
-
-
+       
    
     end
      Screen('CloseAll');
