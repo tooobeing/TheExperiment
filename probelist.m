@@ -1,7 +1,7 @@
-function probeList = probelist() % parameter olabilir içi
+%function probeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
 %load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
-load study.mat
+load study.mat;
     
 [studyList, newpairList] = listconstruction();
 %Parameter = Preparescreen();
@@ -31,7 +31,7 @@ load study.mat
             testPair.t7{i,2} = sub.word{1,i}{7,2};
         end
     end
-
+    
     % new pairs from a different list
     fid_new = fopen("newPairs.txt", 'r');
     new_pairs = textscan(fid_new, '%s%s', 'Delimiter', '\t');
@@ -41,14 +41,14 @@ load study.mat
         testPair.tn{i,1} = new_pairs{1,1}{i};
         testPair.tn{i,2} = new_pairs{1,2}{i};
     end
-   % save testPair.mat
-%end
+
+    % save the test pairs to sub
+   sub.testPair = testPair;
 
 
-%%% biraz daha bak
-    % final list oluştur
-    % i'ler liste sayısına göre değişmeli-parameter'ın içine koy ama sonra 
-    % pairları ya ikinci row olarak yazdır ya da iki colomn yapmaya bak
+
+
+% probe list is constructed from test pairs 
     probeList = {};
     if a == 1
         for i = 1:Parameter.numoflist  % bir ara olmuştu da yeniden bak
@@ -75,6 +75,14 @@ load study.mat
     end
 
     
-  x =  Shuffle(probeList); % çiftleri bozuyor
-    
-    end
+% Randomization try    
+  [rows cols] = size(probeList);
+  rand = randperm(rows);
+  xx = {};
+% hata veriyor bir bak
+  for j = 1:rows
+      xx{j,1} = probeList{rows(j),1};
+      xx{j,2} = probeList{rows(j),2};
+  end
+
+    %end

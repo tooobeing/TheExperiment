@@ -11,6 +11,8 @@ function Parameter = Preparescreen()
     Parameter.width = Parameter.rect(3);
     Parameter.height = Parameter.rect(4);
     Parameter.centerX = Parameter.rect(3)/2;
+    Parameter.centerX1 = Parameter.rect(3)/4;
+    Parameter.centerX2 = 3*Parameter.rect(3)/4;
     Parameter.centerY = Parameter.rect(4)/2;
 
     Screen('TextFont', Parameter.window, 'Times');

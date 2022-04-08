@@ -73,7 +73,7 @@ function Study(sub_id)
             % rt bundan sonra alinsin
             
             
-            %movefile('sub.mat', Parameter.datadir); % num2str falan koy
+            movefile('sub.mat', Parameter.datadir); % num2str falan koy
             %  buraya
            
             save study.mat
