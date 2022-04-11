@@ -1,5 +1,5 @@
-function Study(sub_id)
-%function Study(Parameter, sub_id)
+%function Study(sub_id)
+function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -82,5 +82,5 @@ function Study(sub_id)
 
         %end
     %end
-  Screen('CloseAll');
+  %Screen('CloseAll');
 end

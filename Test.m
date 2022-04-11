@@ -1,5 +1,5 @@
-%function Test(sub_id)
-    Parameter = Preparescreen();
+function Test(Parameter, sub_id)
+    %Parameter = Preparescreen();
     %probeList = probelist(); % brings probeList for test
    
    % study function is added here   
@@ -100,4 +100,4 @@
 
      Screen('CloseAll');
     
-%end
+end

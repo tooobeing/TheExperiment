@@ -37,13 +37,13 @@ function RunExp(sub_id)
     
     % run study function
     % write 'you will begin to study phase of the experiment'
-   % Study(Parameter, sub_id);
+    Study(Parameter, sub_id);
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
     
     % run test function
-   % Test(sub_id);
+    Test(Parameter, sub_id);
     % buraya bir bak
 
     
