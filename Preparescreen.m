@@ -30,6 +30,7 @@ function Parameter = Preparescreen()
 
     % list numbers etc
     Parameter.numoflist = 10; % düzelt
+    Parameter.distractt = 45;
     
     % Inter-stimulus Interval
     Parameter.ISI = WaitSecs(0.5);

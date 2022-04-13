@@ -1,10 +1,10 @@
 function Test(Parameter, sub_id)
     %Parameter = Preparescreen();
-    %probeList = probelist(); % brings probeList for test
+    probeList = probelist(); % brings probeList for test
    
    % study function is added here   
     %Study(Parameter, sub_id);           
-   
+ 
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
     %[normBoundsRect, ~] = Screen('TextBounds', Parameter.window, text1);
     %text = double(text);
@@ -28,7 +28,7 @@ function Test(Parameter, sub_id)
     
 
     %% recognition
-    for i = 1:3 % rows
+    for i = 1:rows % rows
         %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, probeList{i,1}); %kullanınca screen hatası veriyor
         %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, probeList{i,2});
 
@@ -69,7 +69,6 @@ function Test(Parameter, sub_id)
             DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
             Screen('Flip', Parameter.window);
             % recall yaparken bu yazı ekranda kalsın istiyorum sonra bakabilirsin
-                  
             
             while 1
                 ch = GetChar;
@@ -95,9 +94,9 @@ function Test(Parameter, sub_id)
         elseif sub.responseRec{i,1} == KbName(Parameter.no) 
             sub.response{i,1} = sprintf('%s\n', response);
         end      
-   fprintf(Parameter.test_file, '\n %s \t %s', sub.presented{i,1}, sub.presented{i,2}); % bunu tanımla
+   fprintf(Parameter.test_file, '\n %s \t %s \t %s \t %s', sub.presented{i,1}, sub.presented{i,2}, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
     end
 
-     Screen('CloseAll');
+     %Screen('CloseAll');
     
 end

@@ -13,7 +13,7 @@ function Study(Parameter, sub_id)
 
     [studyList, newpairList] = listconstruction();
 
-    Parameter = Preparescreen(); % düzelt burayı
+    %Parameter = Preparescreen(); % düzelt burayı
 
     %% List presentation 
     % Ten or five seperate lists will be displayed during the experiment
@@ -24,11 +24,12 @@ function Study(Parameter, sub_id)
     % no randomization now
    for j = 1:10 % 10|5 olacak        
         whichList = int2str(j);
-        numofList = ['Liste ', whichList];        
-        Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
+        numofList = ['Liste ', whichList];
+        DrawFormattedText(Parameter.window, numofList, 'center');
+        %Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
         Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
         WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
-        sub(sub_id).list{j} = numofList; %tam olmadi
+        %sub(sub_id).list{j} = numofList; %tam olmadi
 
 
         %displays the words of the selected lists in the same order every time
@@ -39,6 +40,8 @@ function Study(Parameter, sub_id)
             % presented word-pair is recorded, j represents the list, i is the word
             sub.word{j}{i,1} = studyList{1, j}{i,1}; 
             sub.word{j}{i,2} = studyList{1, j}{i,2};
+            % save the studied pair, list no and test position of the pair to study list
+            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d',studyList{1, j}{i,1}, studyList{1, j}{i,2}, j, i);
             Screen('Flip', Parameter.window);
 
             % waits for subject to press the space bar to see the next word-pair
@@ -73,7 +76,7 @@ function Study(Parameter, sub_id)
             % rt bundan sonra alinsin
             
             
-            movefile('sub.mat', Parameter.datadir); % num2str falan koy
+            %movefile('sub.mat', Parameter.datadir); % num2str falan koy
             %  buraya
            
             save study.mat

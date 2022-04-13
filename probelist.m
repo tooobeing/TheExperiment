@@ -1,4 +1,4 @@
-%function probeList = probelist() % parameter olabilir içi
+function probeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
 %load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 load study.mat;
@@ -76,13 +76,13 @@ load study.mat;
 
     
 % Randomization try    
-  [rows cols] = size(probeList);
-  rand = randperm(rows);
-  xx = {};
+ % [rows cols] = size(probeList);
+ % rand = randperm(rows);
+ % xx = {};
 % hata veriyor bir bak
-  for j = 1:rows
-      xx{j,1} = probeList{rows(j),1};
-      xx{j,2} = probeList{rows(j),2};
-  end
+  %for j = 1:rows
+   %   xx{j,1} = probeList{rows(j),1};
+    %  xx{j,2} = probeList{rows(j),2};
+  %end
 
-    %end
+    end

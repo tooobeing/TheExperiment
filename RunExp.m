@@ -5,7 +5,7 @@ function RunExp(sub_id)
     % to do -> distractor functions
     
     tic
-     
+   
     Parameter.sub_id = sub_id; % problem cikiyor 
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
@@ -29,11 +29,15 @@ function RunExp(sub_id)
     movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
 
     % Prepare screen
-    Parameter = Preparescreen();    
-
+    Parameter = Preparescreen();
+    % open study and test dat files
+    Parameter.sub_id = sub_id;
+    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+    Parameter.test_file = fopen(sprintf('Test_Sub%d.dat', Parameter.sub_id), 'a');  % create 
+    Parameter.study_file = fopen(sprintf('Study_Sub%d.dat', Parameter.sub_id), 'a');
 
     % Instruction 
-     instruction(Parameter);
+    % instruction(Parameter);
     
     % run study function
     % write 'you will begin to study phase of the experiment'
@@ -41,6 +45,7 @@ function RunExp(sub_id)
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
+    Distraction(Parameter);
     
     % run test function
     Test(Parameter, sub_id);
@@ -48,15 +53,7 @@ function RunExp(sub_id)
 
     
     
-    % Prepare screen   
-    % bu iki satırı tekrar kopyalayınca çalıştı
-    % ama yukarıdan da silemem belki böyle kalır
-    Parameter.sub_id = sub_id; % problem cikiyor 
-    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
-    Parameter.test_file = fopen(sprintf('Data_Sub%d.dat', Parameter.sub_id), 'a'); % açıyor ama boş/bunu nasıl doldururuz
-    % PrepareScreen çalıştırmayınca - çalışıyor
-    % PrepareScreen çalışınca - hata veriyor
 
 
 
@@ -64,7 +61,9 @@ function RunExp(sub_id)
     %movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir); % bunu yapamadı 
     % muhtemelen dosya boş olduğu için taşıyamıyor
     save('workspace');
-    movefile('workspace.mat', Parameter.datadir);
+    %movefile('workspace.mat', Parameter.datadir);
 
 toc
+%ListenChar(1);
+    %fprintf('Deney %d dakika sürdü \n', RT);
 end
