@@ -1,5 +1,5 @@
 %This function prepares the parameters of the experiment
-function Parameter = Preparescreen()
+function Parameter = Preparescreen(Parameter)
 
     %HideCursor;
     %ListenChar(2);
@@ -29,8 +29,9 @@ function Parameter = Preparescreen()
     Parameter.down = KbName('down');
 
     % list numbers etc
-    Parameter.numoflist = 10; % düzelt
+    Parameter.numoflist = 10; 
     Parameter.distractt = 45;
+    Parameter.distracttList = 10;
     
     % Inter-stimulus Interval
     Parameter.ISI = WaitSecs(0.5);

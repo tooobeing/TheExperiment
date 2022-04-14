@@ -29,7 +29,7 @@ function RunExp(sub_id)
     movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
 
     % Prepare screen
-    Parameter = Preparescreen();
+    Parameter = Preparescreen(Parameter);
     % create study and test dat files
     Parameter.sub_id = sub_id;
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
@@ -48,7 +48,7 @@ function RunExp(sub_id)
     %Distraction(Parameter);
     
     % run test function
-    Test(Parameter, sub_id);
+    %Test(Parameter, sub_id);
     % buraya bir bak
 
     
