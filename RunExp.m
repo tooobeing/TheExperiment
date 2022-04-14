@@ -30,10 +30,10 @@ function RunExp(sub_id)
 
     % Prepare screen
     Parameter = Preparescreen();
-    % open study and test dat files
+    % create study and test dat files
     Parameter.sub_id = sub_id;
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
-    Parameter.test_file = fopen(sprintf('Test_Sub%d.dat', Parameter.sub_id), 'a');  % create 
+    Parameter.test_file = fopen(sprintf('Test_Sub%d.dat', Parameter.sub_id), 'a'); 
     Parameter.study_file = fopen(sprintf('Study_Sub%d.dat', Parameter.sub_id), 'a');
 
     % Instruction 
@@ -45,7 +45,7 @@ function RunExp(sub_id)
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
-    Distraction(Parameter);
+    %Distraction(Parameter);
     
     % run test function
     Test(Parameter, sub_id);

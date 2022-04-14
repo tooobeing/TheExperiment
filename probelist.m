@@ -1,7 +1,7 @@
 function probeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
 %load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
-load study.mat;
+load study.mat; % bunu dat'tan çekmek daha iyi olabilir
     
 [studyList, newpairList] = listconstruction();
 %Parameter = Preparescreen();
