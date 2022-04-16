@@ -1,8 +1,8 @@
 function RunExp(sub_id)
     % this function creates a struct for each subject to save their data
     % done -> runs Study 
-    % to do -> Test 
-    % to do -> distractor functions
+    % done -> Test 
+    % done -> distractor functions
     
     tic
    
@@ -40,7 +40,6 @@ function RunExp(sub_id)
     % instruction(Parameter);
     
     % run study function
-    % write 'you will begin to study phase of the experiment'
     Study(Parameter, sub_id);
     
     % run distractor
@@ -48,22 +47,23 @@ function RunExp(sub_id)
     %Distraction(Parameter);
     
     % run test function
-    %Test(Parameter, sub_id);
-    % buraya bir bak
-
-    
-    
-
-
+    textTest = 'Çalışma aşaması bitti. Şimdi test aşamasına geçmek için boşluk tuşuna basın.';
+    DrawFormattedText(Parameter.window, textTest, 'center', 'center');
+    Screen('Flip', Parameter.window);
+    WaitSecs(1);
+    Test(Parameter, sub_id);
+    % buraya bir bak     
 
 
     Screen('CloseAll')
-    %movefile(sprintf('Data_sub%d.dat', Parameter.sub_id), Parameter.datadir); % bunu yapamadı 
+    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+    movefile(Parameter.study_file, Parammeter.datadir);
+    movefile(Parameter.test_file, Parammeter.datadir)
     % muhtemelen dosya boş olduğu için taşıyamıyor
     save('workspace');
     %movefile('workspace.mat', Parameter.datadir);
 
-toc
-%ListenChar(1);
+    toc
+    %ListenChar(1);
     %fprintf('Deney %d dakika sürdü \n', RT);
 end

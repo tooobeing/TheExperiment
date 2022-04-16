@@ -11,17 +11,17 @@ function Study(Parameter, sub_id)
     % and words that are studied. => done 
     % records which words are studied in sub struct
 
-    [studyList, newpairList] = listconstruction();
+    [studyList, newpairList] = listconstruction(sub_id);
 
     %Parameter = Preparescreen(); % düzelt burayı
 
     %% List presentation 
     % Ten or five seperate lists will be displayed during the experiment
     rand = randperm(10); % randomization of lists
-   for j = 1:3 % 10|5 olacak        
+   for j = 1:10 % 10|5 olacak        
         whichList = int2str(j);
         numofList = ['Liste ', whichList];
-        DrawFormattedText(Parameter.window, numofList, 'center');
+        DrawFormattedText(Parameter.window, numofList, 'center', 'center');
         %Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
         Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
         WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
@@ -29,8 +29,13 @@ function Study(Parameter, sub_id)
 
 
         %displays the words of the selected lists in the same order every time        
-        [rows cols] = size(studyList{1,1});        
+        [rows cols] = size(studyList{1,1});  
+        
+
+
         for i = 1:rows
+            %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, studyList{i,1}); %kullanınca screen hatası veriyor
+            %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, studyList{i,2});
             Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
             Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
             % presented word-pair is recorded, j represents the list, i is the word
@@ -53,36 +58,30 @@ function Study(Parameter, sub_id)
             % save the studied pair, list no and test position of the pair to study list
             fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, rand(j)}{i,1}, studyList{1, rand(j)}{i,2}, j, i, sub.RT{j}{i,1});
         end
-        Distraction(Parameter); % süresini ayarlamak lazım
+        textaritmetik = 'Şimdi aritmetik aşamasına geçeceksiniz. \nDevam etmek için boşluk tuşuna basın';
+        DrawFormattedText(Parameter.window, textaritmetik, 'center', 'center');
+        Screen('Flip', Parameter.window);
+            RestrictKeysForKbCheck([Parameter.space]);          
+            keyIsDown = 0;
+            while keyIsDown == 0
+                [keyIsDown, secs, keyCode] = KbCheck;
+            end
+
+            while keyIsDown
+                [keyIsDown, ~, ~] = KbCheck;
+            end
+
+        %Distraction(Parameter); % süresini ayarlamak lazım %1dk olacak
     end
             
     %% Saving the data
-
-             %save("Sub" + num2str(sub_id) + "\Sub" + ".mat"); % hata 
-            % kaydetme alternatifi
-
-
-            % cumle kurmasini isteyecegim
-                %Sound recording
-      % recordSound() % bu fonksiyonu loopun i?inde kullanma?
-            
-        % kay?t i?in loopun i?ine d?zg?n yerle?tirmek laz?m, g?rd???
-        % kelimeleri tekrar edip etmedi?ini d?zg?nce kaydetmek i?in
-        
-        %sub.record{1,j}{i} = recordSound(3); % her kelimeden sonra 3s ses kaydı koymus oldum
-        % tusa basip bitti desin 
-            % rt bundan sonra alinsin
-            
             save sub.mat
             %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
-            movefile('sub.mat', Parameter.datadir); % num2str falan koy
-            movefile(Parameter.study_file, Parammeter.datadir);
+            %movefile('sub.mat', Parameter.datadir); % num2str falan koy
+            %movefile(Parameter.study_file, Parammeter.datadir);
             %  buraya
            
             save study.mat
-            %distractoru buraya koy
-
-
         %end
     %end
   %Screen('CloseAll');

@@ -3,7 +3,7 @@ function randProbeList = probelist() % parameter olabilir içi
 %load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 load study.mat; % bunu dat'tan çekmek daha iyi olabilir
     
-[studyList, newpairList] = listconstruction();
+[studyList, newpairList] = listconstruction(sub_id);
 %Parameter = Preparescreen();
     [rows cols] = size(sub.word);
 
@@ -75,13 +75,13 @@ load study.mat; % bunu dat'tan çekmek daha iyi olabilir
     end
 
     
-% Randomization of selected probes
-  [rows cols] = size(probeList);
-  rand = randperm(rows);
-  randProbeList = {};
-  for j = 1:rows
-      randProbeList{j,1} = probeList{rand(j),1};
-      randProbeList{j,2} = probeList{rand(j),2};
-  end
+    % Randomization of selected probes
+      [rows cols] = size(probeList);
+      rand = randperm(rows);
+      randProbeList = {};
+      for j = 1:rows
+          randProbeList{j,1} = probeList{rand(j),1};
+          randProbeList{j,2} = probeList{rand(j),2};
+      end
 
     end

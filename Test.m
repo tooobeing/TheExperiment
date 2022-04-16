@@ -1,6 +1,6 @@
 function Test(Parameter, sub_id)
     %Parameter = Preparescreen();
-    probeList = probelist(); % brings probeList for test
+    randprobeList = probelist(); % brings probeList for test
    
    % study function is added here   
     %Study(Parameter, sub_id);           
@@ -24,7 +24,7 @@ function Test(Parameter, sub_id)
 
 
 
-    [rows cols] = size(probeList); 
+    [rows cols] = size(randprobeList); 
     
 
     %% recognition
@@ -33,15 +33,15 @@ function Test(Parameter, sub_id)
         %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, probeList{i,2});
 
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
-        Screen('DrawText', Parameter.window, probeList{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
-        Screen('DrawText', Parameter.window, probeList{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, randprobeList{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, randprobeList{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
         Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
         Screen('DrawText', Parameter.window, 'hayır', Parameter.width*2/3, Parameter.height*2/3);
         probeTime = Screen('Flip', Parameter.window);
 
         % save the presented words 
-        sub.presented{i,1} = probeList{i,1};
-        sub.presented{i,2} = probeList{i,2};
+        sub.presented{i,1} = randprobeList{i,1};
+        sub.presented{i,2} = randprobeList{i,2};
 
         
 
@@ -55,6 +55,7 @@ function Test(Parameter, sub_id)
             sub.responseRec{i,1} = ch;
             sub.recogRT(i,1) = seconds - probeTime;
             %break % for restrict keys to recognition
+            %Screen('Flip', Parameter.window); % yeni ekledim burayı
         end 
         
         FlushEvents;
@@ -68,9 +69,12 @@ function Test(Parameter, sub_id)
             text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
             DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
             Screen('Flip', Parameter.window);
-            % recall yaparken bu yazı ekranda kalsın istiyorum sonra bakabilirsin
+
             
             while 1
+                %text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
+                %DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
+                %Screen('Flip', Parameter.window);
                 ch = GetChar;
                 if ch == 13 % enter
                     break
@@ -91,11 +95,49 @@ function Test(Parameter, sub_id)
                     Screen('Flip', Parameter.window);
                     sub.response{i,1} = sprintf('%s\n', response); % recall responses are saved
             end     
-        elseif sub.responseRec{i,1} == KbName(Parameter.no) 
+        else %sub.responseRec{i,1} == KbName(Parameter.no) 
             sub.response{i,1} = sprintf('%s\n', response);
         end      
-   fprintf(Parameter.test_file, '\n %s \t %s \t %s \t %s', sub.presented{i,1}, sub.presented{i,2}, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
+   
+        %% saving the probe list position
+            testfile = fopen(sprintf('Study_Sub%d.dat', sub_id), 'r');
+            study = textscan(testfile, '%s \t %s \t %d \t %d \t %d \n');
+
+            listNO = [];
+            wordNO = [];
+            e = 0;
+            for q = 1:40
+                probe = randprobeList{q,1};
+                probe = convertCharsToStrings(probe);
+                counter = 0;
+                for t = 1:size(study{1,1})
+                    word = study{1,1}{t,1};
+                    word = convertCharsToStrings(word);
+                    if probe == word
+                        listno = study{1,3}(t);
+                        wordno = study{1,4}(t);
+                        listNO = [listNO listno];
+                        wordNO = [wordNO wordno];
+                    else 
+                        counter = counter + 1;
+                    end
+                    if counter == 70
+                        listNO = [listNO e];
+                        wordNO = [wordNO e];
+                    end
+                end
+                %list = double(listNO(i));
+                %word = double(wordNO(i));
+
+
+
+                            
+            end
+
+        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, wordNO, listNO, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
     end
+    fclose(testfile);
+
 
      %Screen('CloseAll');
     
