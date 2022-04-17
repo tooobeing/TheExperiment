@@ -15,11 +15,7 @@ function [studyList, newpairList] = listconstruction(sub_id)
             studyList{j}{k,1} = all_pairs{1,1}{i};       
             studyList{j}{k,2} = all_pairs{1,2}{i};
         end
-    end
-
-        % lists are constructed into one struct with fields
-    %studyList = cell2struct(values, field_names, 2);
-    
+    end    
 
 %% all lists are created, then commented out
     % creates lists as txt files just for once
@@ -46,12 +42,5 @@ function [studyList, newpairList] = listconstruction(sub_id)
         newpairList{i,1} = new_pairs{1,1}{rand(i)};
         newpairList{i,2} = new_pairs{1,2}{rand(i)};
     end
-
-
-
-
-
-
-    %end
 end
 

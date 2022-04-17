@@ -1,5 +1,5 @@
 %function Study(sub_id)
-function Study(Parameter, sub_id)
+function sub = Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -22,20 +22,14 @@ function Study(Parameter, sub_id)
         whichList = int2str(j);
         numofList = ['Liste ', whichList];
         DrawFormattedText(Parameter.window, numofList, 'center', 'center');
-        %Screen('DrawText', Parameter.window, numofList, Parameter.centerX, Parameter.centerY, [255 255 255]); %Gercek centerda gostermiyor 
-        Screen('Flip', Parameter.window);                                                         %ciftleri gosterirken o sorunu hepten cozmek lazim
+        Screen('Flip', Parameter.window);                            
         WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
-        %sub(sub_id).list{j} = numofList; %tam olmadi
-
 
         %displays the words of the selected lists in the same order every time        
-        [rows cols] = size(studyList{1,1});  
-        
-
-
+        [rows cols] = size(studyList{1,1});        
         for i = 1:rows
-            %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, studyList{i,1}); %kullanınca screen hatası veriyor
-            %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, studyList{i,2});
+            %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, studyList{1,rand(j)}{i,1}); %kullanınca screen hatası veriyor
+            %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, studyList{1,rand(j)}{i,2});
             Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
             Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
             % presented word-pair is recorded, j represents the list, i is the word
@@ -75,14 +69,10 @@ function Study(Parameter, sub_id)
     end
             
     %% Saving the data
-            save sub.mat
-            %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
-            %movefile('sub.mat', Parameter.datadir); % num2str falan koy
-            %movefile(Parameter.study_file, Parammeter.datadir);
-            %  buraya
-           
-            save study.mat
-        %end
-    %end
-  %Screen('CloseAll');
+    % move sub.mat to the data file for data analyses
+    save sub.mat
+    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+    movefile('sub.mat', Parameter.datadir); % num2str falan koy         
+    save study.mat % bunu silebilirim
+
 end

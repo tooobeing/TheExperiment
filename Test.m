@@ -1,15 +1,12 @@
-function Test(Parameter, sub_id)
+function sub = Test(Parameter, sub_id)
     %Parameter = Preparescreen();
-    randprobeList = probelist(); % brings probeList for test
-   
-   % study function is added here   
-    %Study(Parameter, sub_id);           
+    randprobeList = probelist(); % brings probeList for test        
  
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
     %[normBoundsRect, ~] = Screen('TextBounds', Parameter.window, text1);
     %text = double(text);
-    %DrawFormattedText(Parameter.window, double(text1), 'center', Parameter.centerY);
-    Screen('DrawText', Parameter.window, text1, Parameter.centerX1 , Parameter.centerY, [255 255 255]);
+    DrawFormattedText(Parameter.window, text1, 'center', 'center');
+    %Screen('DrawText', Parameter.window, text1, Parameter.centerX1 , Parameter.centerY, [255 255 255]);
     Screen('Flip', Parameter.window);    
     
     RestrictKeysForKbCheck([Parameter.space]);
@@ -22,13 +19,11 @@ function Test(Parameter, sub_id)
           [keyIsDown, ~, ~] = KbCheck;
     end
 
-
-
     [rows cols] = size(randprobeList); 
     
 
     %% recognition
-    for i = 1:rows % rows
+    for i = 1:rows
         %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, probeList{i,1}); %kullanınca screen hatası veriyor
         %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, probeList{i,2});
 
@@ -54,8 +49,6 @@ function Test(Parameter, sub_id)
             [keyIsDown, seconds, keyCode] = KbCheck;
             sub.responseRec{i,1} = ch;
             sub.recogRT(i,1) = seconds - probeTime;
-            %break % for restrict keys to recognition
-            %Screen('Flip', Parameter.window); % yeni ekledim burayı
         end 
         
         FlushEvents;
@@ -68,13 +61,8 @@ function Test(Parameter, sub_id)
             % collect recall responses
             text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
             DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
-            Screen('Flip', Parameter.window);
-
-            
+            Screen('Flip', Parameter.window);            
             while 1
-                %text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
-                %DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
-                %Screen('Flip', Parameter.window);
                 ch = GetChar;
                 if ch == 13 % enter
                     break
@@ -95,7 +83,7 @@ function Test(Parameter, sub_id)
                     Screen('Flip', Parameter.window);
                     sub.response{i,1} = sprintf('%s\n', response); % recall responses are saved
             end     
-        else %sub.responseRec{i,1} == KbName(Parameter.no) 
+        else 
             sub.response{i,1} = sprintf('%s\n', response);
         end      
    
@@ -110,7 +98,8 @@ function Test(Parameter, sub_id)
                 probe = randprobeList{q,1};
                 probe = convertCharsToStrings(probe);
                 counter = 0;
-                for t = 1:size(study{1,1})
+                [rows ~] = size(study{1,1});
+                for t = 1:rows
                     word = study{1,1}{t,1};
                     word = convertCharsToStrings(word);
                     if probe == word
@@ -125,20 +114,14 @@ function Test(Parameter, sub_id)
                         listNO = [listNO e];
                         wordNO = [wordNO e];
                     end
-                end
-                %list = double(listNO(i));
-                %word = double(wordNO(i));
-
-
-
-                            
+                end                         
             end
-
-        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, wordNO, listNO, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
+        list = double(listNO(i));
+        word = double(wordNO(i));
+        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, word, list, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
     end
-    fclose(testfile);
-
-
-     %Screen('CloseAll');
-    
+    fclose(testfile);    
+    %save sub.mat
+    %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
+    %movefile('sub.mat', Parameter.datadir);
 end

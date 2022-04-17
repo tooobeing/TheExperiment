@@ -39,29 +39,25 @@ function RunExp(sub_id)
     % Instruction 
     % instruction(Parameter);
     
-    % run study function
-    Study(Parameter, sub_id);
+    %% run study function
+    sub = Study(Parameter, sub_id);
     
     % run distractor
     % write 'now you will begin the mathematical calculation'
     %Distraction(Parameter);
     
-    % run test function
-    textTest = 'Çalışma aşaması bitti. Şimdi test aşamasına geçmek için boşluk tuşuna basın.';
-    DrawFormattedText(Parameter.window, textTest, 'center', 'center');
-    Screen('Flip', Parameter.window);
-    WaitSecs(1);
-    Test(Parameter, sub_id);
+    %% run test function
+    sub = Test(Parameter, sub_id);
     % buraya bir bak     
 
 
     Screen('CloseAll')
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
-    movefile(Parameter.study_file, Parammeter.datadir);
-    movefile(Parameter.test_file, Parammeter.datadir)
-    % muhtemelen dosya boş olduğu için taşıyamıyor
+    %movefile(sprintf('Study_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
+    %movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
     save('workspace');
-    %movefile('workspace.mat', Parameter.datadir);
+    movefile('workspace.mat', Parameter.datadir);
+    movefile('sub.mat', Parameter.datadir);
 
     toc
     %ListenChar(1);

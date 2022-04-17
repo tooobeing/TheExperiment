@@ -36,7 +36,6 @@ load study.mat; % bunu dat'tan çekmek daha iyi olabilir
     fid_new = fopen("newPairs.txt", 'r');
     new_pairs = textscan(fid_new, '%s%s', 'Delimiter', '\t');
     fclose(fid_new);
-    %new_pairs = Shuffle(new_pairs{1,1}); % bunu yapınca batıyor
     for i = 1:10
         testPair.tn{i,1} = new_pairs{1,1}{i};
         testPair.tn{i,2} = new_pairs{1,2}{i};
@@ -83,5 +82,4 @@ load study.mat; % bunu dat'tan çekmek daha iyi olabilir
           randProbeList{j,1} = probeList{rand(j),1};
           randProbeList{j,2} = probeList{rand(j),2};
       end
-
     end
