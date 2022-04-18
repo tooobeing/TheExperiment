@@ -6,7 +6,7 @@ function Parameter = Preparescreen(Parameter)
     % for Turkish characters
     slCharacterEncoding('UTF-8')
     Screen('Preference', 'TextEncodingLocale', 'UTF-8'); 
-    Screen('Preference', 'SkipSyncTests', 1); %optional-should be removed in actual the experiment
+    Screen('Preference', 'SkipSyncTests', 0); %optional-should be removed in actual the experiment
     [Parameter.window, Parameter.rect] = Screen('OpenWindow', 0,[0,0,0]); 
     Parameter.width = Parameter.rect(3);
     Parameter.height = Parameter.rect(4);
@@ -22,6 +22,7 @@ function Parameter = Preparescreen(Parameter)
     %Keys which will be used throughout the experiment
     Parameter.yes = KbName('c');
     Parameter.no = KbName('m');
+    Parameter.keystudy = KbName('b');
     Parameter.return = KbName('return');
     Parameter.backspace = KbName('backspace');
     Parameter.space = KbName('space');
@@ -30,7 +31,7 @@ function Parameter = Preparescreen(Parameter)
 
     % list numbers etc
     Parameter.numoflist = 10; 
-    Parameter.distractt = 5; % süresini ayarla
+    Parameter.distractt = 60; % süresini ayarla
     Parameter.distracttList = 10;
     
     % Inter-stimulus Interval

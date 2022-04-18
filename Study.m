@@ -1,5 +1,4 @@
-%function Study(sub_id)
-function sub = Study(Parameter, sub_id)
+function Study(Parameter, sub_id)
     % The Study function only displays the lists in the randomized fashion
     % The order of words/pairs in the lists will remain the same
     % The function displays each word pairs, => done
@@ -12,9 +11,7 @@ function sub = Study(Parameter, sub_id)
     % records which words are studied in sub struct
 
     [studyList, newpairList] = listconstruction(sub_id);
-
-    %Parameter = Preparescreen(); % düzelt burayı
-
+    Screen('TextSize', Parameter.window, 60);
     %% List presentation 
     % Ten or five seperate lists will be displayed during the experiment
     rand = randperm(10); % randomization of lists
@@ -28,18 +25,17 @@ function sub = Study(Parameter, sub_id)
         %displays the words of the selected lists in the same order every time        
         [rows cols] = size(studyList{1,1});        
         for i = 1:rows
-            %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, studyList{1,rand(j)}{i,1}); %kullanınca screen hatası veriyor
+            %[normBoundsRect1, ~] = Screen('TextBounds', Parameter.window, double(studyList{1,rand(j)}{i,1})); %kullanınca screen hatası veriyor
             %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, studyList{1,rand(j)}{i,2});
-            Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
-            Screen('DrawText', Parameter.window, studyList{1, rand(j)}{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{i,1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{i,2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
             % presented word-pair is recorded, j represents the list, i is the word
             sub.word{j}{i,1} = studyList{1, rand(j)}{i,1}; 
             sub.word{j}{i,2} = studyList{1, rand(j)}{i,2};            
             preFlip = Screen('Flip', Parameter.window);
 
             % waits for subject to press the space bar to see the next word-pair
-            % baska tus yap sonrasında 
-            RestrictKeysForKbCheck([Parameter.space]);          
+            RestrictKeysForKbCheck([Parameter.keystudy]);          
             keyIsDown = 0;
             while keyIsDown == 0
                 [keyIsDown, secs, keyCode] = KbCheck;
@@ -53,7 +49,7 @@ function sub = Study(Parameter, sub_id)
             fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, rand(j)}{i,1}, studyList{1, rand(j)}{i,2}, j, i, sub.RT{j}{i,1});
         end
         textaritmetik = 'Şimdi aritmetik aşamasına geçeceksiniz. \nDevam etmek için boşluk tuşuna basın';
-        DrawFormattedText(Parameter.window, textaritmetik, 'center', 'center');
+        DrawFormattedText(Parameter.window, double(textaritmetik), 'center', 'center');
         Screen('Flip', Parameter.window);
             RestrictKeysForKbCheck([Parameter.space]);          
             keyIsDown = 0;
@@ -68,11 +64,7 @@ function sub = Study(Parameter, sub_id)
         %Distraction(Parameter); % süresini ayarlamak lazım %1dk olacak
     end
             
-    %% Saving the data
-    % move sub.mat to the data file for data analyses
-    save sub.mat
-    Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
-    movefile('sub.mat', Parameter.datadir); % num2str falan koy         
-    save study.mat % bunu silebilirim
+    %% Saving the data as struct  
+    save study.mat 
 
 end

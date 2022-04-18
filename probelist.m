@@ -2,7 +2,7 @@ function randProbeList = probelist() % parameter olabilir içi
     % this function creates probe list for the test part
 %load sub.mat % farklı subjectlerin farklı sub.matları mı olsa buna bir bak
 load study.mat; % bunu dat'tan çekmek daha iyi olabilir
-    
+Parameter.numoflist = 10; 
 [studyList, newpairList] = listconstruction(sub_id);
 %Parameter = Preparescreen();
     [rows cols] = size(sub.word);

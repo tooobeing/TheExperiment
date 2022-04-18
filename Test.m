@@ -1,12 +1,8 @@
-function sub = Test(Parameter, sub_id)
-    %Parameter = Preparescreen();
-    randprobeList = probelist(); % brings probeList for test        
+function Test(Parameter, sub_id)
+    randProbeList = probelist(); % brings probeList for test        
  
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
-    %[normBoundsRect, ~] = Screen('TextBounds', Parameter.window, text1);
-    %text = double(text);
-    DrawFormattedText(Parameter.window, text1, 'center', 'center');
-    %Screen('DrawText', Parameter.window, text1, Parameter.centerX1 , Parameter.centerY, [255 255 255]);
+    DrawFormattedText(Parameter.window, double(text1), 'center', 'center');
     Screen('Flip', Parameter.window);    
     
     RestrictKeysForKbCheck([Parameter.space]);
@@ -19,7 +15,7 @@ function sub = Test(Parameter, sub_id)
           [keyIsDown, ~, ~] = KbCheck;
     end
 
-    [rows cols] = size(randprobeList); 
+    [rows cols] = size(randProbeList); 
     
 
     %% recognition
@@ -28,17 +24,15 @@ function sub = Test(Parameter, sub_id)
         %[normBoundsRect2, ~] = Screen('TextBounds', Parameter.window, probeList{i,2});
 
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
-        Screen('DrawText', Parameter.window, randprobeList{i,1}, Parameter.centerX1, Parameter.centerY, [255 255 255]);
-        Screen('DrawText', Parameter.window, randprobeList{i,2}, Parameter.centerX2, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, double(randProbeList{i,1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
+        Screen('DrawText', Parameter.window, double(randProbeList{i,2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
         Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
-        Screen('DrawText', Parameter.window, 'hayır', Parameter.width*2/3, Parameter.height*2/3);
+        Screen('DrawText', Parameter.window, double('hayır'), Parameter.width*2/3, Parameter.height*2/3);
         probeTime = Screen('Flip', Parameter.window);
 
         % save the presented words 
-        sub.presented{i,1} = randprobeList{i,1};
-        sub.presented{i,2} = randprobeList{i,2};
-
-        
+        sub.presented{i,1} = randProbeList{i,1};
+        sub.presented{i,2} = randProbeList{i,2};        
 
         % collect recognition judgments yes = c no = m
         FlushEvents;
@@ -95,7 +89,7 @@ function sub = Test(Parameter, sub_id)
             wordNO = [];
             e = 0;
             for q = 1:40
-                probe = randprobeList{q,1};
+                probe = randProbeList{q,1};
                 probe = convertCharsToStrings(probe);
                 counter = 0;
                 [rows ~] = size(study{1,1});
@@ -110,18 +104,18 @@ function sub = Test(Parameter, sub_id)
                     else 
                         counter = counter + 1;
                     end
-                    if counter == 70
+                    if counter == 110
                         listNO = [listNO e];
                         wordNO = [wordNO e];
                     end
                 end                         
             end
-        list = double(listNO(i));
-        word = double(wordNO(i));
+        list = double(listNO);
+        word = double(wordNO);
         fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, word, list, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
     end
     fclose(testfile);    
-    %save sub.mat
+    save test.mat
     %Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     %movefile('sub.mat', Parameter.datadir);
 end
