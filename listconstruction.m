@@ -17,13 +17,13 @@ function [studyList, newpairList] = listconstruction(sub_id)
 
 %% all lists are created, then commented out
     % creates lists as txt files just for once
-    for j = 1:10
-        f = fopen("List" + num2str(j)+".txt", 'a');
-        for i = ((j-1)*10+1):(j*10) 
-            fprintf(f, '%s\t %s\n', all_pairs{1,1}{i}, all_pairs{1,2}{i});        
-        end
-        fclose(f);    
-    end
+%     for j = 1:10
+%         f = fopen("List" + num2str(j)+".txt", 'a');
+%         for i = ((j-1)*10+1):(j*10) 
+%             fprintf(f, '%s\t %s\n', all_pairs{1,1}{i}, all_pairs{1,2}{i});        
+%         end
+%         fclose(f);    
+%     end
 
     
     %% new pairs
@@ -41,4 +41,4 @@ function [studyList, newpairList] = listconstruction(sub_id)
         newpairList{i,2} = new_pairs{1,2}{rand(i)};
     end
 end
-
+%newpair listesi randomize olmamış onun dışında bir sıkıntı yok

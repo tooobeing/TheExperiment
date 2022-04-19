@@ -46,16 +46,21 @@ function Test(Parameter, sub_id)
         Parameter.ISI;
 
         % if participant recognize the word, recall phase starts
-        response = ''; % emtpy response is put here to save nothing when recognition is no
+         % emtpy response is put here to save nothing when recognition is no
         if sub.responseRec{i,1} == KbName(Parameter.yes)      
             %% recall  
             % collect recall responses
             text2 = 'Bu kelime çiftini gördüğünüz listeden başka bir kelime yazın.';
             DrawFormattedText(Parameter.window, double(text2), 'center', Parameter.centerY/3);
-            Screen('Flip', Parameter.window);            
+            Screen('Flip', Parameter.window);
+            response = '';
             while 1
                 ch = GetChar;
                 if ch == 13 % enter
+                    if length(response) == 0
+                        %response = 'pass'
+                        sub.response{i,1} = sprintf('%s\n', 'pass');
+                    end
                     break
                 elseif ch == 8 % backspace
                     if length(response) > 0
@@ -66,16 +71,16 @@ function Test(Parameter, sub_id)
                 else
                     response = [response ch];
                 end                
-                    if length(response) > 0
-                        response = double(response);
-                        [normBoundsRect, ~] = Screen('TextBounds', Parameter.window, response);
-                        Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, Parameter.centerY - normBoundsRect (4)/1.5, [255, 255, 255]);
-                    end
-                    Screen('Flip', Parameter.window);
-                    sub.response{i,1} = sprintf('%s\n', response); % recall responses are saved
+                if length(response) > 0
+                    response = double(response);
+                    [normBoundsRect, ~] = Screen('TextBounds', Parameter.window, response);
+                    Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, Parameter.centerY - normBoundsRect (4)/1.5, [255, 255, 255]);
+                end
+                Screen('Flip', Parameter.window);
+                sub.response{i,1} = sprintf('%s\n', response) % recall responses are saved
             end     
             else 
-                sub.response{i,1} = sprintf('%s\n', response);
+                sub.response{i,1} = sprintf('%s\n', '');
             end      
    
         %% saving the probe list position
@@ -97,7 +102,7 @@ function Test(Parameter, sub_id)
                     wordno=0;
                 end
             end     
-        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, listno, wordno, sub.responseRec{i,1}, sub.response{i,1}); % bunu tanımla
+        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, listno, wordno, sub.responseRec{i,1}, sub.response{i,1});
     end
     fclose(testfile);    
     save test.mat
