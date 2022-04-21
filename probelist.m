@@ -37,8 +37,8 @@ function [randProbeList testPair] = probelist()
     fclose(fid_new);
     randnew = randperm(10); 
     for i = 1:10
-        testPair.tn{i,1} = new_pairs{1,1}{randnew(i)}
-        testPair.tn{i,2} = new_pairs{1,2}{randnew(i)}
+        testPair.tn{i,1} = new_pairs{1,1}{randnew(i)};
+        testPair.tn{i,2} = new_pairs{1,2}{randnew(i)};
     end
 
     % save the test pairs to sub
@@ -72,6 +72,7 @@ function [randProbeList testPair] = probelist()
 
     
     % Randomization of selected probes
+    %rng('shuffle')
       [rows cols] = size(probeList);
       rand = randperm(40);
       randProbeList = {};
