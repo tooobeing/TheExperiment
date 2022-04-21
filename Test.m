@@ -57,7 +57,6 @@ function Test(Parameter, sub_id)
                 ch = GetChar;
                 if ch == 13 % enter
                     if length(response) == 0
-                        %response = 'pass'
                         sub.response{i,1} = sprintf('%s\n', 'pass');
                     end
                     break
