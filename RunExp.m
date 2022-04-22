@@ -1,12 +1,11 @@
 function RunExp(sub_id)
-    % this function creates a struct for each subject to save their data
-    % done -> runs Study 
-    % done -> Test 
-    % done -> distractor functions
+    % main function of the experiment
+    % this function saves the data of each subject
+    rand('state', sum(100*clock)); % for setting the seed randomly
+
     
-    tic
-   
-    Parameter.sub_id = sub_id; % problem cikiyor 
+    tic;   
+    Parameter.sub_id = sub_id; 
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
     % Check subject number
@@ -21,10 +20,10 @@ function RunExp(sub_id)
 
     %Demographics
      Demo.age = double(input('Ya??n?z? '));
-     Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
-     Demo.handedness = input('Hangi elinizi baskın olarak kullanıyorsunuz? [L/R] ', 's');
-     Demo.visual_problems = input('Herhangi bir görme probleminiz var m?? [E/H] ', 's');
-    save('Demo', 'Demo');
+     %Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
+     %Demo.handedness = input('Hangi elinizi baskın olarak kullanıyorsunuz? [L/R] ', 's');
+     %Demo.visual_problems = input('Herhangi bir görme probleminiz var m?? [E/H] ', 's');
+     save('Demo', 'Demo');
     
     movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
 
@@ -37,21 +36,30 @@ function RunExp(sub_id)
     Parameter.study_file = fopen(sprintf('Study_Sub%d.dat', Parameter.sub_id), 'a');
 
     % Instruction 
-    instruction(Parameter);
+    %instruction(Parameter);
     
-    %% run study function
-    Study(Parameter, sub_id);
-    
-    % run distractor
-    % write 'now you will begin the mathematical calculation'
-    %Distraction(Parameter);
-    
-    %% run test function
-    Test(Parameter, sub_id);
-    % buraya bir bak     
+    for cycle = 1:1 % Experiment consist of 2 study-test cycles
+        %% run study function
+        Study(Parameter, sub_id,cycle);
+        % distractor runs in the Study function
+        %% run test function
+        Test(Parameter, sub_id);
+        % buraya bir bak 
+        restText = 'Deneye biraz ara verebilirsiniz. \n Hazır olduğunuzda boşluk tuşuna basarak devam edin.';
+        DrawFormattedText(Parameter.window, double(restText), 'center', 'center');
+        Screen('Flip', Parameter.window);
+        RestrictKeysForKbCheck([Parameter.space]);          
+        keyIsDown = 0;
+        while keyIsDown == 0
+            [keyIsDown, secs, keyCode] = KbCheck;
+        end        
+        while keyIsDown
+            [keyIsDown, ~, ~] = KbCheck;
+        end
+    end
 
 
-    Screen('CloseAll')
+    
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     %movefile(Parameter.study_file, Parameter.datadir);
     %movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
@@ -59,7 +67,11 @@ function RunExp(sub_id)
     movefile('workspace.mat', Parameter.datadir);
     movefile('study.mat', Parameter.datadir);
     movefile('test.mat', Parameter.datadir);
-
+    endText = 'Deney sona erdi. Katılımınız için teşekkür ederiz.';
+    DrawFormattedText(Parameter.window, double(endText), 'center', 'center');
+    Screen('Flip', Parameter.window);
+    WaitSecs(3);
+    Screen('CloseAll');
 
     toc
     %ListenChar(1);

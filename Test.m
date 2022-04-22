@@ -30,7 +30,6 @@ function Test(Parameter, sub_id)
         sub.presented{i,1} = randProbeList{i,1};
         sub.presented{i,2} = randProbeList{i,2};
 
-
         % collect recognition judgments yes = c no = m
         FlushEvents;
         RestrictKeysForKbCheck([Parameter.yes, Parameter.no]);
@@ -58,7 +57,6 @@ function Test(Parameter, sub_id)
                 ch = GetChar;
                 if ch == 13 % enter
                     if length(response) == 0
-                        %response = 'pass'
                         sub.response{i,1} = sprintf('%s\n', 'pass');
                     end
                     break
@@ -77,7 +75,7 @@ function Test(Parameter, sub_id)
                     Screen('DrawText', Parameter.window, response, Parameter.centerX - normBoundsRect(3)/2, Parameter.centerY - normBoundsRect (4)/1.5, [255, 255, 255]);
                 end
                 Screen('Flip', Parameter.window);
-                sub.response{i,1} = sprintf('%s\n', response) % recall responses are saved
+                sub.response{i,1} = sprintf('%s\n', response); % recall responses are saved
             end     
             else 
                 sub.response{i,1} = sprintf('%s\n', '');

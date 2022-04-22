@@ -31,7 +31,7 @@ function Parameter = Preparescreen(Parameter)
 
     % list numbers etc
     Parameter.numoflist = 10; 
-    Parameter.distractt = 60; % süresini ayarla
+    Parameter.distractt = 3; % süresini ayarla
     Parameter.distracttList = 10;
     
     % Inter-stimulus Interval
