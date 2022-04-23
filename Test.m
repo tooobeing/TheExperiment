@@ -1,5 +1,5 @@
-function Test(Parameter, sub_id)
-    [randProbeList testPair] = probelist(); % brings probeList for test        
+function Test(Parameter, sub_id, sub)
+    [randProbeList testPair] = probelist(sub); % brings probeList for test        
     sub.testPair = testPair;
     
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';

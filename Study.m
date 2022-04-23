@@ -1,12 +1,12 @@
-function Study(Parameter, sub_id, cycle)
+function [sub] = Study(Parameter, sub_id, cycle, randlist, randword)
     % The Study function only displays the lists in the randomized fashion
-    [studyList, newpairList] = listconstruction(sub_id);
+    [studyList, newpairList] = listconstruction();
     Screen('TextSize', Parameter.window, 60);
     
     %% List presentation 
     % Ten or five seperate lists will be displayed during the experiment
-    rand = randperm(10); % randomization of lists
-    randword = randperm(10); % randomization of words within lists
+    
+    [rows cols] = size(studyList{1,1}); % determining size of the studyList to prevent hardcoding
     if cycle == 1 % in the first cycle
 
        for j = 1:5 % 10|5 olacak        
@@ -17,14 +17,13 @@ function Study(Parameter, sub_id, cycle)
             WaitSecs(1); %sureyi ayarla + ses kaydi koymak lazim
 
         % displays the words of the selected lists
-        % word-pairs randomized within lists
-        [rows cols] = size(studyList{1,1});        
+        % word-pairs randomized within lists                
         for i = 1:rows
-            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{randword(i),1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
-            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{randword(i),2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, randlist(j)}{randword(i),1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, randlist(j)}{randword(i),2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
             % presented word-pair is recorded, j represents the list, i is the word
-            sub.word{j}{i,1} = studyList{1, rand(j)}{randword(i),1}; 
-            sub.word{j}{i,2} = studyList{1, rand(j)}{randword(i),2};            
+            sub.word{j}{i,1} = studyList{1, randlist(j)}{randword(i),1}; 
+            sub.word{j}{i,2} = studyList{1, randlist(j)}{randword(i),2};            
             preFlip = Screen('Flip', Parameter.window);
 
             % waits for subject to press the 'b' key to see the next word-pair
@@ -39,7 +38,7 @@ function Study(Parameter, sub_id, cycle)
             end
             sub.RT{j}{i,1} = secs-preFlip; % the duration of a pair to study
             % save the studied pair, list no and test position of the pair to study list
-            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, rand(j)}{i,1}, studyList{1, rand(j)}{i,2}, j, i, sub.RT{j}{i,1});
+            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, randlist(j)}{i,1}, studyList{1, randlist(j)}{i,2}, j, i, sub.RT{j}{i,1});
         end
         textaritmetik = 'Şimdi aritmetik aşamasına geçeceksiniz. \nDevam etmek için boşluk tuşuna basın';
         DrawFormattedText(Parameter.window, double(textaritmetik), 'center', 'center');
@@ -72,11 +71,11 @@ function Study(Parameter, sub_id, cycle)
         % word-pairs randomized within lists
         [rows cols] = size(studyList{1,1});        
         for i = 1:rows
-            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{randword(i),1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
-            Screen('DrawText', Parameter.window, double(studyList{1, rand(j)}{randword(i),2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, randlist(j)}{randword(i),1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
+            Screen('DrawText', Parameter.window, double(studyList{1, randlist(j)}{randword(i),2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
             % presented word-pair is recorded, j represents the list, i is the word
-            sub.word{j}{i,1} = studyList{1, rand(j)}{randword(i),1}; 
-            sub.word{j}{i,2} = studyList{1, rand(j)}{randword(i),2};            
+            sub.word{j}{i,1} = studyList{1, randlist(j)}{randword(i),1}; 
+            sub.word{j}{i,2} = studyList{1, randlist(j)}{randword(i),2};            
             preFlip = Screen('Flip', Parameter.window);
 
             % waits for subject to press the 'b' key to see the next word-pair
@@ -91,7 +90,8 @@ function Study(Parameter, sub_id, cycle)
             end
             sub.RT{j}{i,1} = secs-preFlip; % the duration of a pair to study
             % save the studied pair, list no and test position of the pair to study list
-            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, rand(j)}{i,1}, studyList{1, rand(j)}{i,2}, j, i, sub.RT{j}{i,1});
+            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, randlist(j)}{randword(i),1}, ...
+                studyList{1, randlist(j)}{randword(i),2}, j, i, sub.RT{j}{i,1});
         end
         textaritmetik = 'Şimdi aritmetik aşamasına geçeceksiniz. \nDevam etmek için boşluk tuşuna basın';
         DrawFormattedText(Parameter.window, double(textaritmetik), 'center', 'center');

@@ -1,8 +1,8 @@
-function [randProbeList testPair] = probelist()
+function [randProbeList testPair] = probelist(sub)
     % this function creates probe list for the test part
-    load study.mat % bunu dat'tan çekmek daha iyi olabilir
+    %load study.mat % bunu dat'tan çekmek daha iyi olabilir
     Parameter.numoflist = 5; % for 2 study-test cycles
-    [studyList, newpairList] = listconstruction(sub_id);
+    [studyList, newpairList] = listconstruction();
     %Parameter = Preparescreen();
         [rows cols] = size(sub.word);
     

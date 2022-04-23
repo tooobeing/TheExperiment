@@ -1,4 +1,4 @@
-function [studyList, newpairList] = listconstruction(sub_id)
+function [studyList, newpairList] = listconstruction()
     % a big struct is constructed using first and second words in the pair
     % all rated word pairs are in one struct the pairs were shuffled in R program
     % now 10-pair word lists will be constructed

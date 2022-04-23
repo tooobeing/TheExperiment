@@ -26,7 +26,8 @@ function RunExp(sub_id)
      save('Demo', 'Demo');
     
     movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
-
+    
+    %subMaster.sub_id = sub_id;
     % Prepare screen
     Parameter = Preparescreen(Parameter);
     % create study and test dat files
@@ -37,13 +38,14 @@ function RunExp(sub_id)
 
     % Instruction 
     %instruction(Parameter);
-    
-    for cycle = 1:1 % Experiment consist of 2 study-test cycles
+    randlist = randperm(10); % randomization of lists
+    randword = randperm(10); % randomization of words within lists
+    for cycle = 1:2 % Experiment consist of 2 study-test cycles
         %% run study function
-        Study(Parameter, sub_id,cycle);
+        subMaster = Study(Parameter, sub_id,cycle, randlist, randword);
         % distractor runs in the Study function
         %% run test function
-        Test(Parameter, sub_id);
+        Test(Parameter, sub_id, subMaster);
         % buraya bir bak 
         restText = 'Deneye biraz ara verebilirsiniz. \n Hazır olduğunuzda boşluk tuşuna basarak devam edin.';
         DrawFormattedText(Parameter.window, double(restText), 'center', 'center');
