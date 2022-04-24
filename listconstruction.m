@@ -35,10 +35,8 @@ function [studyList, newpairList] = listconstruction()
     
     % new pairs struct   
     [rows cols] = size(new_pairs{1,1});
-    rand = randperm(rows); % pairs are randomized
     for i = 1:rows
-        newpairList{i,1} = new_pairs{1,1}{rand(i)};
-        newpairList{i,2} = new_pairs{1,2}{rand(i)};
+        newpairList{i,1} = new_pairs{1,1}{i};
+        newpairList{i,2} = new_pairs{1,2}{i};
     end
 end
-%newpair listesi randomize olmamış onun dışında bir sıkıntı yok

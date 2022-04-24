@@ -1,5 +1,5 @@
-function Test(Parameter, sub_id, sub)
-    [randProbeList testPair] = probelist(sub); % brings probeList for test        
+function [sub] = Test1(Parameter, sub_id, sub, randoprobe, randnew)
+    [randProbeList testPair] = probelist1(sub, randoprobe, randnew); % brings probeList for test        
     sub.testPair = testPair;
     
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
@@ -16,7 +16,7 @@ function Test(Parameter, sub_id, sub)
           [keyIsDown, ~, ~] = KbCheck;
     end
 
-    [rows cols] = size(randProbeList); 
+    [rows ~] = size(randProbeList); 
     %% recognition
     for i = 1:rows
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
@@ -45,7 +45,7 @@ function Test(Parameter, sub_id, sub)
         Parameter.ISI;
 
         % if participant recognize the word, recall phase starts
-         % emtpy response is put here to save nothing when recognition is no
+        % emtpy response is put here to save nothing when recognition is no
         if sub.responseRec{i,1} == KbName(Parameter.yes)      
             %% recall  
             % collect recall responses
@@ -81,7 +81,7 @@ function Test(Parameter, sub_id, sub)
                 sub.response{i,1} = sprintf('%s\n', '');
             end      
    
-        %% saving the probe list position
+        % saving the probe list position
             testfile = fopen(sprintf('Study_Sub%d.dat', sub_id), 'r');
             study = textscan(testfile, '%s \t %s \t %d \t %d \t %d \n');
             probe = randProbeList{i,1};
@@ -103,5 +103,5 @@ function Test(Parameter, sub_id, sub)
         fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, listno, wordno, sub.responseRec{i,1}, sub.response{i,1});
     end
     fclose(testfile);    
-    save test.mat
+    save test1.mat
 end
