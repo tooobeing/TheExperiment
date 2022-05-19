@@ -37,7 +37,7 @@ function [sub] = Study2(Parameter, sub_id, randlist, randword)
             end
             sub.RT{j}{i,1} = secs-preFlip; % the duration of a pair to study
             % save the studied pair, list no and test position of the pair to study list
-            fprintf(Parameter.study_file, '\n %s \t %s \t %d \t %d \t %d',studyList{1, randlist(j)}{randword(i),1}, ...
+            fprintf(Parameter.study_file, '\n %d \t %s \t %s \t %d \t %d \t %d',sub_id, studyList{1, randlist(j)}{randword(i),1}, ...
                 studyList{1, randlist(j)}{randword(i),2}, j, i, sub.RT{j}{i,1});
         end
             
@@ -55,9 +55,10 @@ function [sub] = Study2(Parameter, sub_id, randlist, randword)
         end
 
         Distraction(Parameter); % distractor
+        % show blank screen
         DrawFormattedText(Parameter.window, double('Bekleyiniz.'), 'center', 'center');
         Screen('Flip', Parameter.window);
-        WaitSecs(30);
+        WaitSecs(15); % blank screen duration
     end     
             
     %% Saving the data as struct  

@@ -30,8 +30,8 @@ function Parameter = Preparescreen(Parameter)
     Parameter.down = KbName('down');
 
     % list numbers etc
-    Parameter.numoflist = 5; 
-    Parameter.distractt = 30; % süresini ayarla
+    Parameter.numoflist = 5; % number of list presented per block
+    Parameter.distractt = 15; % distractor duration
     Parameter.distracttList = 10;
     
     % Inter-stimulus Interval

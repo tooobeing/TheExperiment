@@ -8,7 +8,6 @@ function RunExp(sub_id)
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
 
     % Check subject number
-    % bunu bir kontrol et
     if exist(Parameter.datadir) == 7
         msg = double(msgbox('Başka bir katılımcı numarası deneyin.', 'Error!'));
         uiwait(msg);
@@ -45,6 +44,10 @@ function RunExp(sub_id)
     randprobe = randi(2); % randomization for probe list construction 1=even & 2=odd 
     randnew = randperm(40); % randomization for new pair 
 
+    %% practice
+    Studypractice(Parameter);
+    Testpractice(Parameter);
+
 
     %% first cycle
     sub = Study1(Parameter, sub_id, randlist, randword);
@@ -69,10 +72,10 @@ function RunExp(sub_id)
     sub = Test2(Parameter, sub_id, sub, randprobe, randnew);
         
 
-    
+    %% moving the data to the subject's file
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     %movefile(Parameter.study_file, Parameter.datadir);
-    %movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
+    movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
     save workspace.mat;
     movefile('workspace.mat', Parameter.datadir);
     movefile('study1.mat', Parameter.datadir);

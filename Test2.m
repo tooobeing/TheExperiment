@@ -22,8 +22,8 @@ function [sub] = Test2(Parameter, sub_id, sub, randprobe, randnew)
         DrawFormattedText(Parameter.window, double('Bu çifti daha önce gördünüz mü?'), 'center', Parameter.centerY/3);        
         Screen('DrawText', Parameter.window, double(randProbeList{i,1}), Parameter.centerX1-100, Parameter.centerY, [255 255 255]);
         Screen('DrawText', Parameter.window, double(randProbeList{i,2}), Parameter.centerX2-100, Parameter.centerY, [255 255 255]);
-        Screen('DrawText', Parameter.window, 'evet', Parameter.width/3, Parameter.height*2/3);
-        Screen('DrawText', Parameter.window, double('hayır'), Parameter.width*2/3, Parameter.height*2/3);
+        Screen('DrawText', Parameter.window, 'c:evet', Parameter.width/3, Parameter.height*2/3);
+        Screen('DrawText', Parameter.window, double('m:hayır'), Parameter.width*2/3, Parameter.height*2/3);
         probeTime = Screen('Flip', Parameter.window);
 
         % save the presented words 
@@ -83,25 +83,25 @@ function [sub] = Test2(Parameter, sub_id, sub, randprobe, randnew)
    
         %% saving the probe list position
             testfile = fopen(sprintf('Study_Sub%d.dat', sub_id), 'r');
-            study = textscan(testfile, '%s \t %s \t %d \t %d \t %d \n');
+            study = textscan(testfile, '%d \t %s \t %s \t %d \t %d \t %d \n');
             fclose(testfile);
             probe = randProbeList{i,1};
             probe = convertCharsToStrings(probe);
             [rows ~] = size(study{1,1});
             for t = 1:rows
-                word = study{1,1}{t,1};
+                word = study{1,2}{t,1};
                 word = convertCharsToStrings(word);
                 word= word+" ";
                 if probe == word
-                 listno = study{1,3}(t);
-                 wordno = study{1,4}(t);
+                 listno = study{1,4}(t); %değişti
+                 wordno = study{1,5}(t); % değişti
                     break
                 else 
                     listno=0;
                     wordno=0;
                 end
             end     
-        fprintf(Parameter.test_file, '%s \t %s \t %d \t %d \t %s \t %s\n', sub.presented{i,1}, sub.presented{i,2}, listno, wordno, ...
+        fprintf(Parameter.test_file, '%d \t %s \t %s \t %d \t %d \t %s \t %s\n', sub_id, sub.presented{i,1}, sub.presented{i,2}, listno, wordno, ...
             sub.responseRec{i,1}, sub.response{i,1});
     end
     
