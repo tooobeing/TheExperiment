@@ -3,7 +3,7 @@
 % probe list is predetermined for every participant
 function [sub] = Testpractice(Parameter)
     
-    randProbeList = {'a', 'b'; 'x', 'y'; 'k', 'l'};
+    randProbeList = {'titreme', 'suistimal'; 'radyo', 'bitki'; 'eksiklik', 'vals'};
     text1 = 'Test aşamasına geçmek için boşluk tuşuna basın';
     DrawFormattedText(Parameter.window, double(text1), 'center', 'center');
     Screen('Flip', Parameter.window);    

@@ -18,9 +18,9 @@ function RunExp(sub_id)
 
     %Demographics
      Demo.age = double(input('Ya??n?z? '));
-     %Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
-     %Demo.handedness = input('Hangi elinizi baskın olarak kullanıyorsunuz? [L/R] ', 's');
-     %Demo.visual_problems = input('Herhangi bir görme probleminiz var m?? [E/H] ', 's');
+     Demo.sex = input('Cinsiyetiniz? [K/E/D] ', 's');
+     Demo.handedness = input('Hangi elinizi baskın olarak kullanıyorsunuz? [L/R] ', 's');
+     Demo.visual_problems = input('Herhangi bir görme probleminiz var m?? [E/H] ', 's');
      save('Demo', 'Demo');
     
     movefile('Demo.mat', Parameter.datadir); % move demo info to subject's data folder
@@ -42,12 +42,24 @@ function RunExp(sub_id)
     randlist = randperm(10); % randomization of lists
     randword = randperm(10); % randomization of words within lists
     randprobe = randi(2); % randomization for probe list construction 1=even & 2=odd 
-    randnew = randperm(40); % randomization for new pair 
+    randnew = randperm(30); % randomization for new pair 
 
     %% practice
     Studypractice(Parameter);
     Testpractice(Parameter);
-
+    
+    %% end of practice sesion & start the experiment
+    restText = 'Pratik yapma aşaması bitmiştir. Bir sorunuz varsa yürütücüye sorabilirsiniz. \nLütfen deneyi anladığınızdan emin olun. \n Hazır olduğunuzda boşluk tuşuna basarak devam edebilirsiniz.';
+    DrawFormattedText(Parameter.window, double(restText), 'center', 'center');
+    Screen('Flip', Parameter.window);
+    RestrictKeysForKbCheck([Parameter.space]);          
+    keyIsDown = 0;
+    while keyIsDown == 0
+          [keyIsDown, secs, keyCode] = KbCheck;
+    end        
+    while keyIsDown
+          [keyIsDown, ~, ~] = KbCheck;
+    end
 
     %% first cycle
     sub = Study1(Parameter, sub_id, randlist, randword);
@@ -75,7 +87,7 @@ function RunExp(sub_id)
     %% moving the data to the subject's file
     Parameter.datadir = ['../Data/Sub' num2str(Parameter.sub_id) '/'];
     %movefile(Parameter.study_file, Parameter.datadir);
-    movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
+    %movefile(sprintf('Test_Sub%d.dat', Parameter.sub_id), Parameter.datadir);
     save workspace.mat;
     movefile('workspace.mat', Parameter.datadir);
     movefile('study1.mat', Parameter.datadir);

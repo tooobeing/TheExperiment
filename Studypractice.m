@@ -4,9 +4,9 @@
 function [sub] = Studypractice(Parameter)
     Screen('TextSize', Parameter.window, 60);
     % prepare the small study list for practice session
-    list1 = {'a', 'b'; 'c', 'd'};
-    list2 = {'e', 'f'; 'g', 'h'};
-    list3 = {'x', 'y'; 'z', 't'};
+    list1 = {'örtü', 'genç'; 'titreme', 'suistimal'; 'silah', 'kişi' };
+    list2 = {'güvercin', 'sözleşme'; 'unutma', 'tepki'; 'şarap', 'köpek'};
+    list3 = {'eksiklik', 'vals'; 'protesto', 'dostluk'; 'tarih', 'yağma'};
     practiceList = {list1, list2, list3};
     
     %% List presentation 

@@ -83,7 +83,7 @@ function [sub] = Test1(Parameter, sub_id, sub, randoprobe, randnew)
    
         % saving the probe list position
             testfile = fopen(sprintf('Study_Sub%d.dat', sub_id), 'r');
-            study = textscan(testfile, 'd% \t %s \t %s \t %d \t %d \t %d \n');
+            study = textscan(testfile, '%d \t %s \t %s \t %d \t %d \t %d \n');
             probe = randProbeList{i,1};
             probe = convertCharsToStrings(probe);
             [rows ~] = size(study{1,1});

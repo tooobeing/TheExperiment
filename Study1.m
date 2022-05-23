@@ -23,6 +23,7 @@ function [sub] = Study1(Parameter, sub_id, randlist, randword)
             sub.word{j}{i,1} = studyList{1, randlist(j)}{randword(i),1}; % save the studied word to struct file
             sub.word{j}{i,2} = studyList{1, randlist(j)}{randword(i),2};            
             preFlip = Screen('Flip', Parameter.window);
+            WaitSecs(3); % subjects must study a pair at least 3 seconds
 
             % waits for subject to press the 'b' key to see the next word-pair
             RestrictKeysForKbCheck([Parameter.keystudy]);          
